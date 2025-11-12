@@ -45,7 +45,7 @@ model siswa {
   telepon         String
   foto            String    @db.Text
 
-  user            users?    @relation(fields: [id_user], references: [id])
+  user            users?    @relation(fields: [id_user], references: [id], onDelete: Cascade)
   id_user         Int
 
   transaksi       transaksi[]
@@ -57,7 +57,7 @@ model stan {
   nama_pemilik    String
   telepon         String
 
-  user            users?    @relation(fields: [id_user], references: [id])
+  user            users?    @relation(fields: [id_user], references: [id], onDelete: Cascade)
   id_user         Int
 
   menu            menu[]
