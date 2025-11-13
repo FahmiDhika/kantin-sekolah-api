@@ -105,7 +105,7 @@ export const updateUser = async (req: Request, res: Response) => {
     });
 
     res.status(200).json({
-      status: true,
+      status: "success",
       message: `Data user berhasil di update.`,
       data: updateUser,
     });
@@ -169,7 +169,7 @@ export const deleteUser = async (req: Request, res: Response) => {
     });
 
     res.status(200).json({
-      status: true,
+      status: "success",
       message: `User berhasil dihapus`,
       data: deleteUser,
     });
@@ -265,7 +265,7 @@ export const updateSiswa = async (req: Request, res: Response) => {
     });
 
     res.status(200).json({
-      status: true,
+      status: "success",
       message: `Data siswa berhasil di update.`,
       data: updateSiswa,
     });
@@ -338,7 +338,7 @@ export const updateStan = async (req: Request, res: Response) => {
     });
 
     res.status(200).json({
-      status: true,
+      status: "success",
       message: `Data stan ${findStan?.nama_stan} berhasil diupdate`,
       data: updateStan,
     });

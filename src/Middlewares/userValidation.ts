@@ -1,19 +1,19 @@
 import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
 
-export const registerSchema = Joi.object({
+const registerSchema = Joi.object({
   username: Joi.string().required(),
   password: Joi.string().min(8).alphanum().required(),
   role: Joi.string().valid(`ADMIN_STAN`, `SISWA`).required(),
 });
 
-export const updateUser = Joi.object({
+const updateUser = Joi.object({
   username: Joi.string().optional(),
   password: Joi.string().min(8).alphanum().optional(),
   users: Joi.optional(),
 });
 
-export const dataSiswa = Joi.object({
+const dataSiswa = Joi.object({
   nama: Joi.string().required(),
   alamat: Joi.string().required(),
   telepon: Joi.string().required(),
@@ -21,7 +21,7 @@ export const dataSiswa = Joi.object({
   users: Joi.optional(),
 });
 
-export const updateDataSiswa = Joi.object({
+const updateDataSiswa = Joi.object({
   nama: Joi.string().optional(),
   alamat: Joi.string().optional(),
   telepon: Joi.string().optional(),
@@ -29,21 +29,21 @@ export const updateDataSiswa = Joi.object({
   users: Joi.optional(),
 });
 
-export const dataStan = Joi.object({
+const dataStan = Joi.object({
   nama_stan: Joi.string().required(),
   nama_pemilik: Joi.string().required(),
   telepon: Joi.string().required(),
   users: Joi.optional(),
 });
 
-export const updateDataStan = Joi.object({
+const updateDataStan = Joi.object({
   nama_stan: Joi.string().optional(),
   nama_pemilik: Joi.string().optional(),
   telepon: Joi.string().optional(),
   users: Joi.optional(),
 });
 
-export const authSchema = Joi.object({
+const authSchema = Joi.object({
   username: Joi.string().required(),
   password: Joi.string().min(8).alphanum().required(),
 });

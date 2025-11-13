@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
 
-export const addMenuSchema = Joi.object({
+const addMenuSchema = Joi.object({
   nama_menu: Joi.string().required(),
   harga: Joi.number().min(0).required(),
   jenis: Joi.string().valid("MAKANAN", "MINUMAN").required(),
@@ -9,7 +9,7 @@ export const addMenuSchema = Joi.object({
   deskripsi: Joi.string().required(),
 });
 
-export const updateMenuSchema = Joi.object({
+const updateMenuSchema = Joi.object({
   nama_menu: Joi.string().optional(),
   harga: Joi.number().min(0).optional(),
   jenis: Joi.string().valid("MAKANAN", "MINUMAN").optional(),

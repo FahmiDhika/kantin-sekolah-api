@@ -37,7 +37,7 @@ export const getDiskonByStan = async (req: Request, res: Response) => {
     });
 
     res.status(200).json({
-      status: true,
+      status: "success",
       message: `Diskon dari kantin ${stan.nama_stan} berhasil ditampilkan.`,
       data: activeDiskon,
     });
@@ -80,7 +80,7 @@ export const getAllDiskon = async (req: Request, res: Response) => {
     });
 
     res.status(200).json({
-      status: true,
+      status: "success",
       message: `Semua diskon dari stan ${stan.nama_stan} berhasil ditampilkan.`,
       data: diskon,
     });
@@ -127,7 +127,7 @@ export const getActiveDiskon = async (req: Request, res: Response) => {
     });
 
     res.status(200).json({
-      status: true,
+      status: "success",
       message: `Diskon aktif dari stan ${stan.nama_stan} berhasil ditampilkan.`,
       data: activeDiskon,
     });
@@ -170,7 +170,7 @@ export const createDiskon = async (req: Request, res: Response) => {
     });
 
     res.status(200).json({
-      status: true,
+      status: "success",
       message: `Diskon baru berhasil dibuat untuk stan ${stan.nama_stan}.`,
       data: diskon,
     });
@@ -211,10 +211,11 @@ export const updateDiskon = async (req: Request, res: Response) => {
     });
 
     if (!findDiskon) {
-      return res.status(200).json({
+      res.status(200).json({
         status: false,
         message: "Diskon tidak ditemukan atau bukan milik anda.",
       });
+      return;
     }
 
     const updateDiskon = await prisma.diskon.update({
@@ -232,7 +233,7 @@ export const updateDiskon = async (req: Request, res: Response) => {
     });
 
     res.status(200).json({
-      status: true,
+      status: "success",
       message: `Data diskon berhasil diperbarui untuk stan ${stan.nama_stan}.`,
       data: updateDiskon,
     });
@@ -272,10 +273,11 @@ export const deleteDiskon = async (req: Request, res: Response) => {
     });
 
     if (!findDiskon) {
-      return res.status(200).json({
+      res.status(200).json({
         status: false,
         message: "Diskon tidak ditemukan atau bukan milik anda.",
       });
+      return;
     }
 
     const deleteDiskon = await prisma.diskon.delete({
@@ -283,7 +285,7 @@ export const deleteDiskon = async (req: Request, res: Response) => {
     });
 
     res.status(200).json({
-      status: true,
+      status: "success",
       message: `Diskon "${findDiskon.nama_diskon}" milik stan ${stan.nama_stan} berhasil dihapus.`,
       data: deleteDiskon,
     });
@@ -304,10 +306,11 @@ export const pasangDiskon = async (req: Request, res: Response) => {
     const user = (req as any).users;
 
     if (!Array.isArray(id_menus) || id_menus.length === 0) {
-      return res.status(200).json({
+      res.status(200).json({
         status: false,
         message: "Harus ada setidaknya satu menu untuk diberikan diskon.",
       });
+      return;
     }
 
     const stan = await prisma.stan.findFirst({
@@ -330,10 +333,11 @@ export const pasangDiskon = async (req: Request, res: Response) => {
     });
 
     if (!findDiskon) {
-      return res.status(200).json({
+      res.status(200).json({
         status: false,
         message: "Diskon tidak ditemukan atau bukan milik anda.",
       });
+      return;
     }
 
     const menus = await prisma.menu.findMany({
@@ -344,10 +348,11 @@ export const pasangDiskon = async (req: Request, res: Response) => {
     });
 
     if (menus.length !== id_menus.length) {
-      return res.status(200).json({
+      res.status(200).json({
         status: false,
         message: "Beberapa menu tidak ditemukan atau bukan milik stan Anda.",
       });
+      return;
     }
 
     // Filter menu yang belum punya diskon yang sama
@@ -361,10 +366,11 @@ export const pasangDiskon = async (req: Request, res: Response) => {
     const menusToAssign = menus.filter((m) => !existingMenuIds.includes(m.id));
 
     if (menusToAssign.length === 0) {
-      return res.status(200).json({
+      res.status(200).json({
         status: false,
         message: "Semua menu sudah memiliki diskon ini.",
       });
+      return;
     }
 
     const newAssignments = await prisma.menu_diskon.createMany({
@@ -388,7 +394,7 @@ export const pasangDiskon = async (req: Request, res: Response) => {
     }
 
     res.status(200).json({
-      status: true,
+      status: "success",
       message: `Diskon berhasil diterapkan ke ${menusToAssign.length} menu.`,
       data: newAssignments,
     });
@@ -409,10 +415,11 @@ export const lepasDiskon = async (req: Request, res: Response) => {
     const user = (req as any).users;
 
     if (!Array.isArray(id_menus) || id_menus.length === 0) {
-      return res.status(200).json({
+      res.status(200).json({
         status: false,
         message: "Harus ada setidaknya satu menu untuk diberikan diskon.",
       });
+      return;
     }
 
     const stan = await prisma.stan.findFirst({
@@ -435,10 +442,11 @@ export const lepasDiskon = async (req: Request, res: Response) => {
     });
 
     if (!findDiskon) {
-      return res.status(200).json({
+      res.status(200).json({
         status: false,
         message: "Diskon tidak ditemukan atau bukan milik anda.",
       });
+      return;
     }
 
     const deleteMenuDiskon = await prisma.menu_diskon.deleteMany({
@@ -463,7 +471,7 @@ export const lepasDiskon = async (req: Request, res: Response) => {
     }
 
     res.status(200).json({
-      status: true,
+      status: "success",
       message: `Diskon berhasil dilepas dari ${deleteMenuDiskon.count} menu.`,
       data: deleteMenuDiskon,
     });

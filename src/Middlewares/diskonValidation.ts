@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
 
-export const createDiskonSchema = Joi.object({
+const createDiskonSchema = Joi.object({
   nama_diskon: Joi.string().required().messages({
     "string.empty": "Nama diskon tidak boleh kosong.",
     "any.required": "Nama diskon wajib diisi.",
@@ -25,7 +25,7 @@ export const createDiskonSchema = Joi.object({
     }),
 });
 
-export const updateDiskonSchema = Joi.object({
+const updateDiskonSchema = Joi.object({
   nama_diskon: Joi.string().optional(),
   persentase: Joi.number().min(0).max(100).optional(),
   tanggal_awal: Joi.date().optional(),

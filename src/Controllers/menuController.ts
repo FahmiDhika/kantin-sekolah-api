@@ -65,7 +65,7 @@ export const getAllMenusForSiswa = async (req: Request, res: Response) => {
     });
 
     res.status(200).json({
-      status: true,
+      status: "success",
       message: `Menu kantin berhasil ditampilkan.`,
       data: findMenu,
     });
@@ -174,7 +174,7 @@ export const addMenu = async (req: Request, res: Response) => {
     });
 
     res.status(200).json({
-      status: true,
+      status: "success",
       message: `Menu baru berhasil ditambahkan.`,
       data: addMenu,
     });
@@ -236,7 +236,7 @@ export const updateMenu = async (req: Request, res: Response) => {
     });
 
     res.status(200).json({
-      status: true,
+      status: "success",
       message: `Menu berhasil diupdate.`,
       data: updateMenu,
     });
@@ -295,7 +295,7 @@ export const deleteMenu = async (req: Request, res: Response) => {
     }
 
     res.status(200).json({
-      status: true,
+      status: "success",
       message: `Menu berhasil dihapus.`,
       data: deleteMenu,
     });

@@ -107,6 +107,7 @@ model transaksi {
   id              Int       @id @default(autoincrement())
   uuid            String    @unique
   tanggal         DateTime  @default(now())
+  status          status    @default(BELUM)
 
   stan            stan      @relation(fields: [id_stan], references: [id])
   id_stan         Int
@@ -120,9 +121,10 @@ model transaksi {
 model detail_transaksi {
   id              Int       @id @default(autoincrement())
   jumlah          Int
+  catatan         String?   @default("-") @db.Text
   harga_total     Decimal   @db.Decimal(10,2)
 
-  transaksi       transaksi @relation(fields: [id_transaksi], references: [id])
+  transaksi       transaksi @relation(fields: [id_transaksi], references: [id], onDelete: Cascade)
   id_transaksi    Int
 
   menu            menu      @relation(fields: [id_menu], references: [id])
