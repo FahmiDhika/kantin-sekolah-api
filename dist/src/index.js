@@ -16,6 +16,12 @@ app.use("/user", userRouter_1.default);
 app.use("/menu", menuRouter_1.default);
 app.use("/diskon", diskonRouter_1.default);
 app.use("/order", orderRouter_1.default);
+app.get("/", (req, res) => {
+    res
+        .status(200)
+        .json({ status: "success", message: "Welcome to Kantin Sekolah API" });
+    return;
+});
 app.listen(global_1.PORT, () => {
     console.log(`Server run on port http://localhost:${global_1.PORT}`);
 });
