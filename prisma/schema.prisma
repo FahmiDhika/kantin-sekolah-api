@@ -99,7 +99,7 @@ model menu_diskon {
 
 model transaksi {
   id              Int       @id @default(autoincrement())
-  uudi            String    @unique
+  uuid            String    @unique
   tanggal         DateTime  @default(now())
 
   stan            stan      @relation(fields: [id_stan], references: [id])
