@@ -1,9 +1,5 @@
 {
   "version": 2,
   "builds": [{ "src": "dist/src/index.js", "use": "@vercel/node" }],
-  "routes": [{ "src": "/(.*)", "dest": "dist/src/index.js" }],
-  "env": {
-    "DATABASE_URL": "@database_url",
-    "SECRET": "@secret"
-  }
+  "routes": [{ "src": "/(.*)", "dest": "dist/src/index.js" }]
 }
