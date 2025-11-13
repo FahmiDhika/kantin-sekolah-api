@@ -1,102 +1,12 @@
 generator client {
-  provider      = "prisma-client-js"
-  output        = "../dist/generated/prisma"
-  previewFeatures = ["driverAdapters"]
+  provider = "prisma-client-js"
+  output   = "../dist/generated/prisma"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-}
-
-model users {
-  id        Int      @id @default(autoincrement())
-  username  String   @unique
-  password  String
-  role      role
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  siswa     siswa[]
-  stan      stan[]
-}
-
-model siswa {
-  id        Int         @id @default(autoincrement())
-  uuid      String      @unique
-  nama      String
-  alamat    String
-  telepon   String
-  foto      String
-  id_user   Int
-  user      users       @relation(fields: [id_user], references: [id], onDelete: Cascade)
-  transaksi transaksi[]
-}
-
-model stan {
-  id           Int         @id @default(autoincrement())
-  nama_stan    String
-  nama_pemilik String
-  telepon      String
-  id_user      Int
-  diskon       diskon[]
-  menu         menu[]
-  user         users       @relation(fields: [id_user], references: [id], onDelete: Cascade)
-  transaksi    transaksi[]
-}
-
-model menu {
-  id               Int                @id @default(autoincrement())
-  nama_menu        String
-  harga            Decimal            @db.Decimal(10, 2)
-  jenis            jenis
-  foto             String
-  deskripsi        String
-  id_stan          Int
-  detail_transaksi detail_transaksi[]
-  stan             stan               @relation(fields: [id_stan], references: [id], onDelete: Cascade)
-  menu_diskon      menu_diskon[]
-}
-
-model diskon {
-  id            Int           @id @default(autoincrement())
-  nama_diskon   String
-  persentase    Float
-  tanggal_awal  DateTime
-  tanggal_akhir DateTime
-  id_stan       Int
-  stan          stan          @relation(fields: [id_stan], references: [id], onDelete: Cascade)
-  menu_diskon   menu_diskon[]
-}
-
-model menu_diskon {
-  id        Int    @id @default(autoincrement())
-  id_menu   Int
-  id_diskon Int
-  diskon    diskon @relation(fields: [id_diskon], references: [id], onDelete: Cascade)
-  menu      menu   @relation(fields: [id_menu], references: [id], onDelete: Cascade)
-}
-
-model transaksi {
-  id               Int                @id @default(autoincrement())
-  tanggal          DateTime           @default(now())
-  id_stan          Int
-  id_siswa         Int
-  uuid             String             @unique
-  status           status             @default(BELUM)
-  detail_transaksi detail_transaksi[]
-  siswa            siswa              @relation(fields: [id_siswa], references: [id])
-  stan             stan               @relation(fields: [id_stan], references: [id])
-}
-
-model detail_transaksi {
-  id           Int       @id @default(autoincrement())
-  jumlah       Int
-  harga_total  Decimal   @db.Decimal(10, 2)
-  id_transaksi Int
-  id_menu      Int
-  catatan      String?   @default("-")
-  menu         menu      @relation(fields: [id_menu], references: [id])
-  transaksi    transaksi @relation(fields: [id_transaksi], references: [id], onDelete: Cascade)
 }
 
 enum role {
@@ -113,4 +23,111 @@ enum status {
   BELUM
   DIMASAK
   SELESAI
+}
+
+model users {
+  id              Int       @id @default(autoincrement())
+  username        String    @unique
+  password        String    
+  role            role
+
+  siswa           siswa[]
+  stan            stan[]
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model siswa {
+  id              Int       @id @default(autoincrement())
+  uuid            String    @unique
+  nama            String
+  alamat          String    @db.Text
+  telepon         String
+  foto            String    @db.Text
+
+  user            users?    @relation(fields: [id_user], references: [id], onDelete: Cascade)
+  id_user         Int
+
+  transaksi       transaksi[]
+}
+
+model stan {
+  id              Int       @id @default(autoincrement())
+  nama_stan       String
+  nama_pemilik    String
+  telepon         String
+
+  user            users?    @relation(fields: [id_user], references: [id], onDelete: Cascade)
+  id_user         Int
+
+  menu            menu[]
+  transaksi       transaksi[]
+  diskon          diskon[]
+}
+
+model menu {
+  id                Int              @id @default(autoincrement())
+  nama_menu         String
+  harga             Decimal          @db.Decimal(10,2)
+  jenis             jenis
+  foto              String           @db.Text
+  deskripsi         String           @db.Text
+
+  stan              stan             @relation(fields: [id_stan], references: [id], onDelete: Cascade)
+  id_stan           Int
+
+  menu_diskon       menu_diskon[]
+  detail_transaksi  detail_transaksi[]
+}
+
+model diskon {
+  id              Int              @id @default(autoincrement())
+  nama_diskon     String
+  persentase      Float
+  tanggal_awal    DateTime
+  tanggal_akhir   DateTime
+
+  stan            stan             @relation(fields: [id_stan], references: [id], onDelete: Cascade)
+  id_stan         Int
+
+  menu_diskon     menu_diskon[]
+}
+
+model menu_diskon {
+  id              Int      @id @default(autoincrement())
+  menu            menu     @relation(fields: [id_menu], references: [id], onDelete: Cascade)
+  id_menu         Int
+
+  diskon          diskon   @relation(fields: [id_diskon], references: [id], onDelete: Cascade)
+  id_diskon       Int
+}
+
+
+model transaksi {
+  id              Int       @id @default(autoincrement())
+  uuid            String    @unique
+  tanggal         DateTime  @default(now())
+  status          status    @default(BELUM)
+
+  stan            stan      @relation(fields: [id_stan], references: [id])
+  id_stan         Int
+
+  siswa           siswa     @relation(fields: [id_siswa], references: [id])
+  id_siswa        Int
+
+  detail_transaksi  detail_transaksi[]
+}
+
+model detail_transaksi {
+  id              Int       @id @default(autoincrement())
+  jumlah          Int
+  catatan         String?   @default("-") @db.Text
+  harga_total     Decimal   @db.Decimal(10,2)
+
+  transaksi       transaksi @relation(fields: [id_transaksi], references: [id], onDelete: Cascade)
+  id_transaksi    Int
+
+  menu            menu      @relation(fields: [id_menu], references: [id])
+  id_menu         Int
 }

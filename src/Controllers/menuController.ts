@@ -1,12 +1,9 @@
-import { PrismaClient } from "../generated/prisma/client";
+import { jenis, PrismaClient } from "../generated/prisma/client";
 import { Request, Response } from "express";
 import fs from "fs";
 import { BASE_URL } from "../global";
-import { withAccelerate } from "@prisma/extension-accelerate";
 
-export const prisma = new PrismaClient({
-  datasourceUrl: process.env.PRISMA_ACCELERATE_URL,
-}).$extends(withAccelerate());
+const prisma = new PrismaClient({ errorFormat: "pretty" });
 
 export const getAllMenusForSiswa = async (req: Request, res: Response) => {
   try {

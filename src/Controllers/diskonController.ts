@@ -1,11 +1,8 @@
 import { PrismaClient } from "../generated/prisma/client";
 import { Request, Response } from "express";
 import dayjs from "dayjs";
-import { withAccelerate } from "@prisma/extension-accelerate";
 
-export const prisma = new PrismaClient({
-  datasourceUrl: process.env.PRISMA_ACCELERATE_URL,
-}).$extends(withAccelerate());
+const prisma = new PrismaClient({ errorFormat: "pretty" });
 
 export const getDiskonByStan = async (req: Request, res: Response) => {
   try {
