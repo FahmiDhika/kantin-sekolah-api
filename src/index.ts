@@ -22,7 +22,3 @@ app.get("/", (req, res) => {
     .json({ status: "success", message: "Welcome to Kantin Sekolah API" });
   return;
 });
-
-app.listen(PORT, () => {
-  console.log(`Server run on port http://localhost:${PORT}`);
-});

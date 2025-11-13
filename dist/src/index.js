@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
-const global_1 = require("./global");
 const menuRouter_1 = __importDefault(require("./Routers/menuRouter"));
 const userRouter_1 = __importDefault(require("./Routers/userRouter"));
 const diskonRouter_1 = __importDefault(require("./Routers/diskonRouter"));
@@ -21,7 +20,4 @@ app.get("/", (req, res) => {
         .status(200)
         .json({ status: "success", message: "Welcome to Kantin Sekolah API" });
     return;
-});
-app.listen(global_1.PORT, () => {
-    console.log(`Server run on port http://localhost:${global_1.PORT}`);
 });
