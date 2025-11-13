@@ -62,40 +62,46 @@ model stan {
 
   menu            menu[]
   transaksi       transaksi[]
+  diskon          diskon[]
 }
 
 model menu {
-  id              Int       @id @default(autoincrement())
-  nama_menu       String
-  harga           Decimal   @db.Decimal(10,2)
-  jenis           jenis
-  foto            String    @db.Text
-  deskripsi       String    @db.Text
+  id                Int              @id @default(autoincrement())
+  nama_menu         String
+  harga             Decimal          @db.Decimal(10,2)
+  jenis             jenis
+  foto              String           @db.Text
+  deskripsi         String           @db.Text
 
-  stan            stan      @relation(fields: [id_stan], references: [id])
-  id_stan         Int
+  stan              stan             @relation(fields: [id_stan], references: [id], onDelete: Cascade)
+  id_stan           Int
 
-  menu_diskon     menu_diskon[]
+  menu_diskon       menu_diskon[]
   detail_transaksi  detail_transaksi[]
 }
 
 model diskon {
-  id              Int       @id @default(autoincrement())
+  id              Int              @id @default(autoincrement())
   nama_diskon     String
   persentase      Float
   tanggal_awal    DateTime
   tanggal_akhir   DateTime
 
+  stan            stan             @relation(fields: [id_stan], references: [id], onDelete: Cascade)
+  id_stan         Int
+
   menu_diskon     menu_diskon[]
 }
 
 model menu_diskon {
-  id              Int       @id @default(autoincrement())
-  menu            menu      @relation(fields: [id_menu], references: [id])
+  id              Int      @id @default(autoincrement())
+  menu            menu     @relation(fields: [id_menu], references: [id], onDelete: Cascade)
   id_menu         Int
-  diskon          diskon    @relation(fields: [id_diskon], references: [id])
+
+  diskon          diskon   @relation(fields: [id_diskon], references: [id], onDelete: Cascade)
   id_diskon       Int
 }
+
 
 model transaksi {
   id              Int       @id @default(autoincrement())
