@@ -22,3 +22,5 @@ app.get("/", (req, res) => {
     .json({ status: "success", message: "Welcome to Kantin Sekolah API" });
   return;
 });
+
+export default app
