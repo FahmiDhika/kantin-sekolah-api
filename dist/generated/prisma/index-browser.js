@@ -175,20 +175,20 @@ exports.Prisma.Menu_diskonScalarFieldEnum = {
 
 exports.Prisma.TransaksiScalarFieldEnum = {
   id: 'id',
-  uuid: 'uuid',
   tanggal: 'tanggal',
-  status: 'status',
   id_stan: 'id_stan',
-  id_siswa: 'id_siswa'
+  id_siswa: 'id_siswa',
+  uuid: 'uuid',
+  status: 'status'
 };
 
 exports.Prisma.Detail_transaksiScalarFieldEnum = {
   id: 'id',
   jumlah: 'jumlah',
-  catatan: 'catatan',
   harga_total: 'harga_total',
   id_transaksi: 'id_transaksi',
-  id_menu: 'id_menu'
+  id_menu: 'id_menu',
+  catatan: 'catatan'
 };
 
 exports.Prisma.SortOrder = {

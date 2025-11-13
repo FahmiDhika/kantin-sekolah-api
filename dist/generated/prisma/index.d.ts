@@ -1611,15 +1611,15 @@ export namespace Prisma {
    */
 
   export type StanCountOutputType = {
+    diskon: number
     menu: number
     transaksi: number
-    diskon: number
   }
 
   export type StanCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    diskon?: boolean | StanCountOutputTypeCountDiskonArgs
     menu?: boolean | StanCountOutputTypeCountMenuArgs
     transaksi?: boolean | StanCountOutputTypeCountTransaksiArgs
-    diskon?: boolean | StanCountOutputTypeCountDiskonArgs
   }
 
   // Custom InputTypes
@@ -1636,6 +1636,13 @@ export namespace Prisma {
   /**
    * StanCountOutputType without action
    */
+  export type StanCountOutputTypeCountDiskonArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: diskonWhereInput
+  }
+
+  /**
+   * StanCountOutputType without action
+   */
   export type StanCountOutputTypeCountMenuArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: menuWhereInput
   }
@@ -1647,26 +1654,19 @@ export namespace Prisma {
     where?: transaksiWhereInput
   }
 
-  /**
-   * StanCountOutputType without action
-   */
-  export type StanCountOutputTypeCountDiskonArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: diskonWhereInput
-  }
-
 
   /**
    * Count Type MenuCountOutputType
    */
 
   export type MenuCountOutputType = {
-    menu_diskon: number
     detail_transaksi: number
+    menu_diskon: number
   }
 
   export type MenuCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    menu_diskon?: boolean | MenuCountOutputTypeCountMenu_diskonArgs
     detail_transaksi?: boolean | MenuCountOutputTypeCountDetail_transaksiArgs
+    menu_diskon?: boolean | MenuCountOutputTypeCountMenu_diskonArgs
   }
 
   // Custom InputTypes
@@ -1683,15 +1683,15 @@ export namespace Prisma {
   /**
    * MenuCountOutputType without action
    */
-  export type MenuCountOutputTypeCountMenu_diskonArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: menu_diskonWhereInput
+  export type MenuCountOutputTypeCountDetail_transaksiArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: detail_transaksiWhereInput
   }
 
   /**
    * MenuCountOutputType without action
    */
-  export type MenuCountOutputTypeCountDetail_transaksiArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: detail_transaksiWhereInput
+  export type MenuCountOutputTypeCountMenu_diskonArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: menu_diskonWhereInput
   }
 
 
@@ -3124,7 +3124,7 @@ export namespace Prisma {
     telepon?: boolean
     foto?: boolean
     id_user?: boolean
-    user?: boolean | siswa$userArgs<ExtArgs>
+    user?: boolean | usersDefaultArgs<ExtArgs>
     transaksi?: boolean | siswa$transaksiArgs<ExtArgs>
     _count?: boolean | SiswaCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["siswa"]>
@@ -3137,7 +3137,7 @@ export namespace Prisma {
     telepon?: boolean
     foto?: boolean
     id_user?: boolean
-    user?: boolean | siswa$userArgs<ExtArgs>
+    user?: boolean | usersDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["siswa"]>
 
   export type siswaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3148,7 +3148,7 @@ export namespace Prisma {
     telepon?: boolean
     foto?: boolean
     id_user?: boolean
-    user?: boolean | siswa$userArgs<ExtArgs>
+    user?: boolean | usersDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["siswa"]>
 
   export type siswaSelectScalar = {
@@ -3163,21 +3163,21 @@ export namespace Prisma {
 
   export type siswaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "uuid" | "nama" | "alamat" | "telepon" | "foto" | "id_user", ExtArgs["result"]["siswa"]>
   export type siswaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | siswa$userArgs<ExtArgs>
+    user?: boolean | usersDefaultArgs<ExtArgs>
     transaksi?: boolean | siswa$transaksiArgs<ExtArgs>
     _count?: boolean | SiswaCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type siswaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | siswa$userArgs<ExtArgs>
+    user?: boolean | usersDefaultArgs<ExtArgs>
   }
   export type siswaIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | siswa$userArgs<ExtArgs>
+    user?: boolean | usersDefaultArgs<ExtArgs>
   }
 
   export type $siswaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "siswa"
     objects: {
-      user: Prisma.$usersPayload<ExtArgs> | null
+      user: Prisma.$usersPayload<ExtArgs>
       transaksi: Prisma.$transaksiPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -3582,7 +3582,7 @@ export namespace Prisma {
    */
   export interface Prisma__siswaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends siswa$userArgs<ExtArgs> = {}>(args?: Subset<T, siswa$userArgs<ExtArgs>>): Prisma__usersClient<$Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    user<T extends usersDefaultArgs<ExtArgs> = {}>(args?: Subset<T, usersDefaultArgs<ExtArgs>>): Prisma__usersClient<$Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     transaksi<T extends siswa$transaksiArgs<ExtArgs> = {}>(args?: Subset<T, siswa$transaksiArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$transaksiPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -4016,25 +4016,6 @@ export namespace Prisma {
   }
 
   /**
-   * siswa.user
-   */
-  export type siswa$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the users
-     */
-    select?: usersSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the users
-     */
-    omit?: usersOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: usersInclude<ExtArgs> | null
-    where?: usersWhereInput
-  }
-
-  /**
    * siswa.transaksi
    */
   export type siswa$transaksiArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4279,10 +4260,10 @@ export namespace Prisma {
     nama_pemilik?: boolean
     telepon?: boolean
     id_user?: boolean
-    user?: boolean | stan$userArgs<ExtArgs>
-    menu?: boolean | stan$menuArgs<ExtArgs>
-    transaksi?: boolean | stan$transaksiArgs<ExtArgs>
     diskon?: boolean | stan$diskonArgs<ExtArgs>
+    menu?: boolean | stan$menuArgs<ExtArgs>
+    user?: boolean | usersDefaultArgs<ExtArgs>
+    transaksi?: boolean | stan$transaksiArgs<ExtArgs>
     _count?: boolean | StanCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["stan"]>
 
@@ -4292,7 +4273,7 @@ export namespace Prisma {
     nama_pemilik?: boolean
     telepon?: boolean
     id_user?: boolean
-    user?: boolean | stan$userArgs<ExtArgs>
+    user?: boolean | usersDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["stan"]>
 
   export type stanSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4301,7 +4282,7 @@ export namespace Prisma {
     nama_pemilik?: boolean
     telepon?: boolean
     id_user?: boolean
-    user?: boolean | stan$userArgs<ExtArgs>
+    user?: boolean | usersDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["stan"]>
 
   export type stanSelectScalar = {
@@ -4314,26 +4295,26 @@ export namespace Prisma {
 
   export type stanOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nama_stan" | "nama_pemilik" | "telepon" | "id_user", ExtArgs["result"]["stan"]>
   export type stanInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | stan$userArgs<ExtArgs>
-    menu?: boolean | stan$menuArgs<ExtArgs>
-    transaksi?: boolean | stan$transaksiArgs<ExtArgs>
     diskon?: boolean | stan$diskonArgs<ExtArgs>
+    menu?: boolean | stan$menuArgs<ExtArgs>
+    user?: boolean | usersDefaultArgs<ExtArgs>
+    transaksi?: boolean | stan$transaksiArgs<ExtArgs>
     _count?: boolean | StanCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type stanIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | stan$userArgs<ExtArgs>
+    user?: boolean | usersDefaultArgs<ExtArgs>
   }
   export type stanIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | stan$userArgs<ExtArgs>
+    user?: boolean | usersDefaultArgs<ExtArgs>
   }
 
   export type $stanPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "stan"
     objects: {
-      user: Prisma.$usersPayload<ExtArgs> | null
-      menu: Prisma.$menuPayload<ExtArgs>[]
-      transaksi: Prisma.$transaksiPayload<ExtArgs>[]
       diskon: Prisma.$diskonPayload<ExtArgs>[]
+      menu: Prisma.$menuPayload<ExtArgs>[]
+      user: Prisma.$usersPayload<ExtArgs>
+      transaksi: Prisma.$transaksiPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -4735,10 +4716,10 @@ export namespace Prisma {
    */
   export interface Prisma__stanClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends stan$userArgs<ExtArgs> = {}>(args?: Subset<T, stan$userArgs<ExtArgs>>): Prisma__usersClient<$Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    menu<T extends stan$menuArgs<ExtArgs> = {}>(args?: Subset<T, stan$menuArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$menuPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    transaksi<T extends stan$transaksiArgs<ExtArgs> = {}>(args?: Subset<T, stan$transaksiArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$transaksiPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     diskon<T extends stan$diskonArgs<ExtArgs> = {}>(args?: Subset<T, stan$diskonArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$diskonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    menu<T extends stan$menuArgs<ExtArgs> = {}>(args?: Subset<T, stan$menuArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$menuPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    user<T extends usersDefaultArgs<ExtArgs> = {}>(args?: Subset<T, usersDefaultArgs<ExtArgs>>): Prisma__usersClient<$Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    transaksi<T extends stan$transaksiArgs<ExtArgs> = {}>(args?: Subset<T, stan$transaksiArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$transaksiPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5169,22 +5150,27 @@ export namespace Prisma {
   }
 
   /**
-   * stan.user
+   * stan.diskon
    */
-  export type stan$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type stan$diskonArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the users
+     * Select specific fields to fetch from the diskon
      */
-    select?: usersSelect<ExtArgs> | null
+    select?: diskonSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the users
+     * Omit specific fields from the diskon
      */
-    omit?: usersOmit<ExtArgs> | null
+    omit?: diskonOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: usersInclude<ExtArgs> | null
-    where?: usersWhereInput
+    include?: diskonInclude<ExtArgs> | null
+    where?: diskonWhereInput
+    orderBy?: diskonOrderByWithRelationInput | diskonOrderByWithRelationInput[]
+    cursor?: diskonWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DiskonScalarFieldEnum | DiskonScalarFieldEnum[]
   }
 
   /**
@@ -5233,30 +5219,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TransaksiScalarFieldEnum | TransaksiScalarFieldEnum[]
-  }
-
-  /**
-   * stan.diskon
-   */
-  export type stan$diskonArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the diskon
-     */
-    select?: diskonSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the diskon
-     */
-    omit?: diskonOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: diskonInclude<ExtArgs> | null
-    where?: diskonWhereInput
-    orderBy?: diskonOrderByWithRelationInput | diskonOrderByWithRelationInput[]
-    cursor?: diskonWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: DiskonScalarFieldEnum | DiskonScalarFieldEnum[]
   }
 
   /**
@@ -5500,9 +5462,9 @@ export namespace Prisma {
     foto?: boolean
     deskripsi?: boolean
     id_stan?: boolean
+    detail_transaksi?: boolean | menu$detail_transaksiArgs<ExtArgs>
     stan?: boolean | stanDefaultArgs<ExtArgs>
     menu_diskon?: boolean | menu$menu_diskonArgs<ExtArgs>
-    detail_transaksi?: boolean | menu$detail_transaksiArgs<ExtArgs>
     _count?: boolean | MenuCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["menu"]>
 
@@ -5540,9 +5502,9 @@ export namespace Prisma {
 
   export type menuOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nama_menu" | "harga" | "jenis" | "foto" | "deskripsi" | "id_stan", ExtArgs["result"]["menu"]>
   export type menuInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    detail_transaksi?: boolean | menu$detail_transaksiArgs<ExtArgs>
     stan?: boolean | stanDefaultArgs<ExtArgs>
     menu_diskon?: boolean | menu$menu_diskonArgs<ExtArgs>
-    detail_transaksi?: boolean | menu$detail_transaksiArgs<ExtArgs>
     _count?: boolean | MenuCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type menuIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5555,9 +5517,9 @@ export namespace Prisma {
   export type $menuPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "menu"
     objects: {
+      detail_transaksi: Prisma.$detail_transaksiPayload<ExtArgs>[]
       stan: Prisma.$stanPayload<ExtArgs>
       menu_diskon: Prisma.$menu_diskonPayload<ExtArgs>[]
-      detail_transaksi: Prisma.$detail_transaksiPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -5961,9 +5923,9 @@ export namespace Prisma {
    */
   export interface Prisma__menuClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    detail_transaksi<T extends menu$detail_transaksiArgs<ExtArgs> = {}>(args?: Subset<T, menu$detail_transaksiArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$detail_transaksiPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     stan<T extends stanDefaultArgs<ExtArgs> = {}>(args?: Subset<T, stanDefaultArgs<ExtArgs>>): Prisma__stanClient<$Result.GetResult<Prisma.$stanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     menu_diskon<T extends menu$menu_diskonArgs<ExtArgs> = {}>(args?: Subset<T, menu$menu_diskonArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$menu_diskonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    detail_transaksi<T extends menu$detail_transaksiArgs<ExtArgs> = {}>(args?: Subset<T, menu$detail_transaksiArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$detail_transaksiPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6396,30 +6358,6 @@ export namespace Prisma {
   }
 
   /**
-   * menu.menu_diskon
-   */
-  export type menu$menu_diskonArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the menu_diskon
-     */
-    select?: menu_diskonSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the menu_diskon
-     */
-    omit?: menu_diskonOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: menu_diskonInclude<ExtArgs> | null
-    where?: menu_diskonWhereInput
-    orderBy?: menu_diskonOrderByWithRelationInput | menu_diskonOrderByWithRelationInput[]
-    cursor?: menu_diskonWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Menu_diskonScalarFieldEnum | Menu_diskonScalarFieldEnum[]
-  }
-
-  /**
    * menu.detail_transaksi
    */
   export type menu$detail_transaksiArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6441,6 +6379,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Detail_transaksiScalarFieldEnum | Detail_transaksiScalarFieldEnum[]
+  }
+
+  /**
+   * menu.menu_diskon
+   */
+  export type menu$menu_diskonArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the menu_diskon
+     */
+    select?: menu_diskonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the menu_diskon
+     */
+    omit?: menu_diskonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: menu_diskonInclude<ExtArgs> | null
+    where?: menu_diskonWhereInput
+    orderBy?: menu_diskonOrderByWithRelationInput | menu_diskonOrderByWithRelationInput[]
+    cursor?: menu_diskonWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Menu_diskonScalarFieldEnum | Menu_diskonScalarFieldEnum[]
   }
 
   /**
@@ -7795,24 +7757,24 @@ export namespace Prisma {
     id?: boolean
     id_menu?: boolean
     id_diskon?: boolean
-    menu?: boolean | menuDefaultArgs<ExtArgs>
     diskon?: boolean | diskonDefaultArgs<ExtArgs>
+    menu?: boolean | menuDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["menu_diskon"]>
 
   export type menu_diskonSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     id_menu?: boolean
     id_diskon?: boolean
-    menu?: boolean | menuDefaultArgs<ExtArgs>
     diskon?: boolean | diskonDefaultArgs<ExtArgs>
+    menu?: boolean | menuDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["menu_diskon"]>
 
   export type menu_diskonSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     id_menu?: boolean
     id_diskon?: boolean
-    menu?: boolean | menuDefaultArgs<ExtArgs>
     diskon?: boolean | diskonDefaultArgs<ExtArgs>
+    menu?: boolean | menuDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["menu_diskon"]>
 
   export type menu_diskonSelectScalar = {
@@ -7823,23 +7785,23 @@ export namespace Prisma {
 
   export type menu_diskonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "id_menu" | "id_diskon", ExtArgs["result"]["menu_diskon"]>
   export type menu_diskonInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    menu?: boolean | menuDefaultArgs<ExtArgs>
     diskon?: boolean | diskonDefaultArgs<ExtArgs>
+    menu?: boolean | menuDefaultArgs<ExtArgs>
   }
   export type menu_diskonIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    menu?: boolean | menuDefaultArgs<ExtArgs>
     diskon?: boolean | diskonDefaultArgs<ExtArgs>
+    menu?: boolean | menuDefaultArgs<ExtArgs>
   }
   export type menu_diskonIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    menu?: boolean | menuDefaultArgs<ExtArgs>
     diskon?: boolean | diskonDefaultArgs<ExtArgs>
+    menu?: boolean | menuDefaultArgs<ExtArgs>
   }
 
   export type $menu_diskonPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "menu_diskon"
     objects: {
-      menu: Prisma.$menuPayload<ExtArgs>
       diskon: Prisma.$diskonPayload<ExtArgs>
+      menu: Prisma.$menuPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -8239,8 +8201,8 @@ export namespace Prisma {
    */
   export interface Prisma__menu_diskonClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    menu<T extends menuDefaultArgs<ExtArgs> = {}>(args?: Subset<T, menuDefaultArgs<ExtArgs>>): Prisma__menuClient<$Result.GetResult<Prisma.$menuPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     diskon<T extends diskonDefaultArgs<ExtArgs> = {}>(args?: Subset<T, diskonDefaultArgs<ExtArgs>>): Prisma__diskonClient<$Result.GetResult<Prisma.$diskonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    menu<T extends menuDefaultArgs<ExtArgs> = {}>(args?: Subset<T, menuDefaultArgs<ExtArgs>>): Prisma__menuClient<$Result.GetResult<Prisma.$menuPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8713,29 +8675,29 @@ export namespace Prisma {
 
   export type TransaksiMinAggregateOutputType = {
     id: number | null
-    uuid: string | null
     tanggal: Date | null
-    status: $Enums.status | null
     id_stan: number | null
     id_siswa: number | null
+    uuid: string | null
+    status: $Enums.status | null
   }
 
   export type TransaksiMaxAggregateOutputType = {
     id: number | null
-    uuid: string | null
     tanggal: Date | null
-    status: $Enums.status | null
     id_stan: number | null
     id_siswa: number | null
+    uuid: string | null
+    status: $Enums.status | null
   }
 
   export type TransaksiCountAggregateOutputType = {
     id: number
-    uuid: number
     tanggal: number
-    status: number
     id_stan: number
     id_siswa: number
+    uuid: number
+    status: number
     _all: number
   }
 
@@ -8754,29 +8716,29 @@ export namespace Prisma {
 
   export type TransaksiMinAggregateInputType = {
     id?: true
-    uuid?: true
     tanggal?: true
-    status?: true
     id_stan?: true
     id_siswa?: true
+    uuid?: true
+    status?: true
   }
 
   export type TransaksiMaxAggregateInputType = {
     id?: true
-    uuid?: true
     tanggal?: true
-    status?: true
     id_stan?: true
     id_siswa?: true
+    uuid?: true
+    status?: true
   }
 
   export type TransaksiCountAggregateInputType = {
     id?: true
-    uuid?: true
     tanggal?: true
-    status?: true
     id_stan?: true
     id_siswa?: true
+    uuid?: true
+    status?: true
     _all?: true
   }
 
@@ -8868,11 +8830,11 @@ export namespace Prisma {
 
   export type TransaksiGroupByOutputType = {
     id: number
-    uuid: string
     tanggal: Date
-    status: $Enums.status
     id_stan: number
     id_siswa: number
+    uuid: string
+    status: $Enums.status
     _count: TransaksiCountAggregateOutputType | null
     _avg: TransaksiAvgAggregateOutputType | null
     _sum: TransaksiSumAggregateOutputType | null
@@ -8896,78 +8858,78 @@ export namespace Prisma {
 
   export type transaksiSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    uuid?: boolean
     tanggal?: boolean
-    status?: boolean
     id_stan?: boolean
     id_siswa?: boolean
-    stan?: boolean | stanDefaultArgs<ExtArgs>
-    siswa?: boolean | siswaDefaultArgs<ExtArgs>
+    uuid?: boolean
+    status?: boolean
     detail_transaksi?: boolean | transaksi$detail_transaksiArgs<ExtArgs>
+    siswa?: boolean | siswaDefaultArgs<ExtArgs>
+    stan?: boolean | stanDefaultArgs<ExtArgs>
     _count?: boolean | TransaksiCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transaksi"]>
 
   export type transaksiSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    uuid?: boolean
     tanggal?: boolean
-    status?: boolean
     id_stan?: boolean
     id_siswa?: boolean
-    stan?: boolean | stanDefaultArgs<ExtArgs>
+    uuid?: boolean
+    status?: boolean
     siswa?: boolean | siswaDefaultArgs<ExtArgs>
+    stan?: boolean | stanDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transaksi"]>
 
   export type transaksiSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    uuid?: boolean
     tanggal?: boolean
-    status?: boolean
     id_stan?: boolean
     id_siswa?: boolean
-    stan?: boolean | stanDefaultArgs<ExtArgs>
+    uuid?: boolean
+    status?: boolean
     siswa?: boolean | siswaDefaultArgs<ExtArgs>
+    stan?: boolean | stanDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transaksi"]>
 
   export type transaksiSelectScalar = {
     id?: boolean
-    uuid?: boolean
     tanggal?: boolean
-    status?: boolean
     id_stan?: boolean
     id_siswa?: boolean
+    uuid?: boolean
+    status?: boolean
   }
 
-  export type transaksiOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "uuid" | "tanggal" | "status" | "id_stan" | "id_siswa", ExtArgs["result"]["transaksi"]>
+  export type transaksiOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tanggal" | "id_stan" | "id_siswa" | "uuid" | "status", ExtArgs["result"]["transaksi"]>
   export type transaksiInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    stan?: boolean | stanDefaultArgs<ExtArgs>
-    siswa?: boolean | siswaDefaultArgs<ExtArgs>
     detail_transaksi?: boolean | transaksi$detail_transaksiArgs<ExtArgs>
+    siswa?: boolean | siswaDefaultArgs<ExtArgs>
+    stan?: boolean | stanDefaultArgs<ExtArgs>
     _count?: boolean | TransaksiCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type transaksiIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    stan?: boolean | stanDefaultArgs<ExtArgs>
     siswa?: boolean | siswaDefaultArgs<ExtArgs>
+    stan?: boolean | stanDefaultArgs<ExtArgs>
   }
   export type transaksiIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    stan?: boolean | stanDefaultArgs<ExtArgs>
     siswa?: boolean | siswaDefaultArgs<ExtArgs>
+    stan?: boolean | stanDefaultArgs<ExtArgs>
   }
 
   export type $transaksiPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "transaksi"
     objects: {
-      stan: Prisma.$stanPayload<ExtArgs>
-      siswa: Prisma.$siswaPayload<ExtArgs>
       detail_transaksi: Prisma.$detail_transaksiPayload<ExtArgs>[]
+      siswa: Prisma.$siswaPayload<ExtArgs>
+      stan: Prisma.$stanPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      uuid: string
       tanggal: Date
-      status: $Enums.status
       id_stan: number
       id_siswa: number
+      uuid: string
+      status: $Enums.status
     }, ExtArgs["result"]["transaksi"]>
     composites: {}
   }
@@ -9362,9 +9324,9 @@ export namespace Prisma {
    */
   export interface Prisma__transaksiClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    stan<T extends stanDefaultArgs<ExtArgs> = {}>(args?: Subset<T, stanDefaultArgs<ExtArgs>>): Prisma__stanClient<$Result.GetResult<Prisma.$stanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    siswa<T extends siswaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, siswaDefaultArgs<ExtArgs>>): Prisma__siswaClient<$Result.GetResult<Prisma.$siswaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     detail_transaksi<T extends transaksi$detail_transaksiArgs<ExtArgs> = {}>(args?: Subset<T, transaksi$detail_transaksiArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$detail_transaksiPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    siswa<T extends siswaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, siswaDefaultArgs<ExtArgs>>): Prisma__siswaClient<$Result.GetResult<Prisma.$siswaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    stan<T extends stanDefaultArgs<ExtArgs> = {}>(args?: Subset<T, stanDefaultArgs<ExtArgs>>): Prisma__stanClient<$Result.GetResult<Prisma.$stanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9395,11 +9357,11 @@ export namespace Prisma {
    */
   interface transaksiFieldRefs {
     readonly id: FieldRef<"transaksi", 'Int'>
-    readonly uuid: FieldRef<"transaksi", 'String'>
     readonly tanggal: FieldRef<"transaksi", 'DateTime'>
-    readonly status: FieldRef<"transaksi", 'status'>
     readonly id_stan: FieldRef<"transaksi", 'Int'>
     readonly id_siswa: FieldRef<"transaksi", 'Int'>
+    readonly uuid: FieldRef<"transaksi", 'String'>
+    readonly status: FieldRef<"transaksi", 'status'>
   }
     
 
@@ -9869,28 +9831,28 @@ export namespace Prisma {
   export type Detail_transaksiMinAggregateOutputType = {
     id: number | null
     jumlah: number | null
-    catatan: string | null
     harga_total: Decimal | null
     id_transaksi: number | null
     id_menu: number | null
+    catatan: string | null
   }
 
   export type Detail_transaksiMaxAggregateOutputType = {
     id: number | null
     jumlah: number | null
-    catatan: string | null
     harga_total: Decimal | null
     id_transaksi: number | null
     id_menu: number | null
+    catatan: string | null
   }
 
   export type Detail_transaksiCountAggregateOutputType = {
     id: number
     jumlah: number
-    catatan: number
     harga_total: number
     id_transaksi: number
     id_menu: number
+    catatan: number
     _all: number
   }
 
@@ -9914,28 +9876,28 @@ export namespace Prisma {
   export type Detail_transaksiMinAggregateInputType = {
     id?: true
     jumlah?: true
-    catatan?: true
     harga_total?: true
     id_transaksi?: true
     id_menu?: true
+    catatan?: true
   }
 
   export type Detail_transaksiMaxAggregateInputType = {
     id?: true
     jumlah?: true
-    catatan?: true
     harga_total?: true
     id_transaksi?: true
     id_menu?: true
+    catatan?: true
   }
 
   export type Detail_transaksiCountAggregateInputType = {
     id?: true
     jumlah?: true
-    catatan?: true
     harga_total?: true
     id_transaksi?: true
     id_menu?: true
+    catatan?: true
     _all?: true
   }
 
@@ -10028,10 +9990,10 @@ export namespace Prisma {
   export type Detail_transaksiGroupByOutputType = {
     id: number
     jumlah: number
-    catatan: string | null
     harga_total: Decimal
     id_transaksi: number
     id_menu: number
+    catatan: string | null
     _count: Detail_transaksiCountAggregateOutputType | null
     _avg: Detail_transaksiAvgAggregateOutputType | null
     _sum: Detail_transaksiSumAggregateOutputType | null
@@ -10056,72 +10018,72 @@ export namespace Prisma {
   export type detail_transaksiSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     jumlah?: boolean
-    catatan?: boolean
     harga_total?: boolean
     id_transaksi?: boolean
     id_menu?: boolean
-    transaksi?: boolean | transaksiDefaultArgs<ExtArgs>
+    catatan?: boolean
     menu?: boolean | menuDefaultArgs<ExtArgs>
+    transaksi?: boolean | transaksiDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["detail_transaksi"]>
 
   export type detail_transaksiSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     jumlah?: boolean
-    catatan?: boolean
     harga_total?: boolean
     id_transaksi?: boolean
     id_menu?: boolean
-    transaksi?: boolean | transaksiDefaultArgs<ExtArgs>
+    catatan?: boolean
     menu?: boolean | menuDefaultArgs<ExtArgs>
+    transaksi?: boolean | transaksiDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["detail_transaksi"]>
 
   export type detail_transaksiSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     jumlah?: boolean
-    catatan?: boolean
     harga_total?: boolean
     id_transaksi?: boolean
     id_menu?: boolean
-    transaksi?: boolean | transaksiDefaultArgs<ExtArgs>
+    catatan?: boolean
     menu?: boolean | menuDefaultArgs<ExtArgs>
+    transaksi?: boolean | transaksiDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["detail_transaksi"]>
 
   export type detail_transaksiSelectScalar = {
     id?: boolean
     jumlah?: boolean
-    catatan?: boolean
     harga_total?: boolean
     id_transaksi?: boolean
     id_menu?: boolean
+    catatan?: boolean
   }
 
-  export type detail_transaksiOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "jumlah" | "catatan" | "harga_total" | "id_transaksi" | "id_menu", ExtArgs["result"]["detail_transaksi"]>
+  export type detail_transaksiOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "jumlah" | "harga_total" | "id_transaksi" | "id_menu" | "catatan", ExtArgs["result"]["detail_transaksi"]>
   export type detail_transaksiInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    transaksi?: boolean | transaksiDefaultArgs<ExtArgs>
     menu?: boolean | menuDefaultArgs<ExtArgs>
+    transaksi?: boolean | transaksiDefaultArgs<ExtArgs>
   }
   export type detail_transaksiIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    transaksi?: boolean | transaksiDefaultArgs<ExtArgs>
     menu?: boolean | menuDefaultArgs<ExtArgs>
+    transaksi?: boolean | transaksiDefaultArgs<ExtArgs>
   }
   export type detail_transaksiIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    transaksi?: boolean | transaksiDefaultArgs<ExtArgs>
     menu?: boolean | menuDefaultArgs<ExtArgs>
+    transaksi?: boolean | transaksiDefaultArgs<ExtArgs>
   }
 
   export type $detail_transaksiPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "detail_transaksi"
     objects: {
-      transaksi: Prisma.$transaksiPayload<ExtArgs>
       menu: Prisma.$menuPayload<ExtArgs>
+      transaksi: Prisma.$transaksiPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       jumlah: number
-      catatan: string | null
       harga_total: Prisma.Decimal
       id_transaksi: number
       id_menu: number
+      catatan: string | null
     }, ExtArgs["result"]["detail_transaksi"]>
     composites: {}
   }
@@ -10516,8 +10478,8 @@ export namespace Prisma {
    */
   export interface Prisma__detail_transaksiClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    transaksi<T extends transaksiDefaultArgs<ExtArgs> = {}>(args?: Subset<T, transaksiDefaultArgs<ExtArgs>>): Prisma__transaksiClient<$Result.GetResult<Prisma.$transaksiPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     menu<T extends menuDefaultArgs<ExtArgs> = {}>(args?: Subset<T, menuDefaultArgs<ExtArgs>>): Prisma__menuClient<$Result.GetResult<Prisma.$menuPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    transaksi<T extends transaksiDefaultArgs<ExtArgs> = {}>(args?: Subset<T, transaksiDefaultArgs<ExtArgs>>): Prisma__transaksiClient<$Result.GetResult<Prisma.$transaksiPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10549,10 +10511,10 @@ export namespace Prisma {
   interface detail_transaksiFieldRefs {
     readonly id: FieldRef<"detail_transaksi", 'Int'>
     readonly jumlah: FieldRef<"detail_transaksi", 'Int'>
-    readonly catatan: FieldRef<"detail_transaksi", 'String'>
     readonly harga_total: FieldRef<"detail_transaksi", 'Decimal'>
     readonly id_transaksi: FieldRef<"detail_transaksi", 'Int'>
     readonly id_menu: FieldRef<"detail_transaksi", 'Int'>
+    readonly catatan: FieldRef<"detail_transaksi", 'String'>
   }
     
 
@@ -11053,11 +11015,11 @@ export namespace Prisma {
 
   export const TransaksiScalarFieldEnum: {
     id: 'id',
-    uuid: 'uuid',
     tanggal: 'tanggal',
-    status: 'status',
     id_stan: 'id_stan',
-    id_siswa: 'id_siswa'
+    id_siswa: 'id_siswa',
+    uuid: 'uuid',
+    status: 'status'
   };
 
   export type TransaksiScalarFieldEnum = (typeof TransaksiScalarFieldEnum)[keyof typeof TransaksiScalarFieldEnum]
@@ -11066,10 +11028,10 @@ export namespace Prisma {
   export const Detail_transaksiScalarFieldEnum: {
     id: 'id',
     jumlah: 'jumlah',
-    catatan: 'catatan',
     harga_total: 'harga_total',
     id_transaksi: 'id_transaksi',
-    id_menu: 'id_menu'
+    id_menu: 'id_menu',
+    catatan: 'catatan'
   };
 
   export type Detail_transaksiScalarFieldEnum = (typeof Detail_transaksiScalarFieldEnum)[keyof typeof Detail_transaksiScalarFieldEnum]
@@ -11295,7 +11257,7 @@ export namespace Prisma {
     telepon?: StringFilter<"siswa"> | string
     foto?: StringFilter<"siswa"> | string
     id_user?: IntFilter<"siswa"> | number
-    user?: XOR<UsersNullableScalarRelationFilter, usersWhereInput> | null
+    user?: XOR<UsersScalarRelationFilter, usersWhereInput>
     transaksi?: TransaksiListRelationFilter
   }
 
@@ -11322,7 +11284,7 @@ export namespace Prisma {
     telepon?: StringFilter<"siswa"> | string
     foto?: StringFilter<"siswa"> | string
     id_user?: IntFilter<"siswa"> | number
-    user?: XOR<UsersNullableScalarRelationFilter, usersWhereInput> | null
+    user?: XOR<UsersScalarRelationFilter, usersWhereInput>
     transaksi?: TransaksiListRelationFilter
   }, "id" | "uuid">
 
@@ -11363,10 +11325,10 @@ export namespace Prisma {
     nama_pemilik?: StringFilter<"stan"> | string
     telepon?: StringFilter<"stan"> | string
     id_user?: IntFilter<"stan"> | number
-    user?: XOR<UsersNullableScalarRelationFilter, usersWhereInput> | null
-    menu?: MenuListRelationFilter
-    transaksi?: TransaksiListRelationFilter
     diskon?: DiskonListRelationFilter
+    menu?: MenuListRelationFilter
+    user?: XOR<UsersScalarRelationFilter, usersWhereInput>
+    transaksi?: TransaksiListRelationFilter
   }
 
   export type stanOrderByWithRelationInput = {
@@ -11375,10 +11337,10 @@ export namespace Prisma {
     nama_pemilik?: SortOrder
     telepon?: SortOrder
     id_user?: SortOrder
-    user?: usersOrderByWithRelationInput
-    menu?: menuOrderByRelationAggregateInput
-    transaksi?: transaksiOrderByRelationAggregateInput
     diskon?: diskonOrderByRelationAggregateInput
+    menu?: menuOrderByRelationAggregateInput
+    user?: usersOrderByWithRelationInput
+    transaksi?: transaksiOrderByRelationAggregateInput
   }
 
   export type stanWhereUniqueInput = Prisma.AtLeast<{
@@ -11390,10 +11352,10 @@ export namespace Prisma {
     nama_pemilik?: StringFilter<"stan"> | string
     telepon?: StringFilter<"stan"> | string
     id_user?: IntFilter<"stan"> | number
-    user?: XOR<UsersNullableScalarRelationFilter, usersWhereInput> | null
-    menu?: MenuListRelationFilter
-    transaksi?: TransaksiListRelationFilter
     diskon?: DiskonListRelationFilter
+    menu?: MenuListRelationFilter
+    user?: XOR<UsersScalarRelationFilter, usersWhereInput>
+    transaksi?: TransaksiListRelationFilter
   }, "id">
 
   export type stanOrderByWithAggregationInput = {
@@ -11431,9 +11393,9 @@ export namespace Prisma {
     foto?: StringFilter<"menu"> | string
     deskripsi?: StringFilter<"menu"> | string
     id_stan?: IntFilter<"menu"> | number
+    detail_transaksi?: Detail_transaksiListRelationFilter
     stan?: XOR<StanScalarRelationFilter, stanWhereInput>
     menu_diskon?: Menu_diskonListRelationFilter
-    detail_transaksi?: Detail_transaksiListRelationFilter
   }
 
   export type menuOrderByWithRelationInput = {
@@ -11444,9 +11406,9 @@ export namespace Prisma {
     foto?: SortOrder
     deskripsi?: SortOrder
     id_stan?: SortOrder
+    detail_transaksi?: detail_transaksiOrderByRelationAggregateInput
     stan?: stanOrderByWithRelationInput
     menu_diskon?: menu_diskonOrderByRelationAggregateInput
-    detail_transaksi?: detail_transaksiOrderByRelationAggregateInput
   }
 
   export type menuWhereUniqueInput = Prisma.AtLeast<{
@@ -11460,9 +11422,9 @@ export namespace Prisma {
     foto?: StringFilter<"menu"> | string
     deskripsi?: StringFilter<"menu"> | string
     id_stan?: IntFilter<"menu"> | number
+    detail_transaksi?: Detail_transaksiListRelationFilter
     stan?: XOR<StanScalarRelationFilter, stanWhereInput>
     menu_diskon?: Menu_diskonListRelationFilter
-    detail_transaksi?: Detail_transaksiListRelationFilter
   }, "id">
 
   export type menuOrderByWithAggregationInput = {
@@ -11565,16 +11527,16 @@ export namespace Prisma {
     id?: IntFilter<"menu_diskon"> | number
     id_menu?: IntFilter<"menu_diskon"> | number
     id_diskon?: IntFilter<"menu_diskon"> | number
-    menu?: XOR<MenuScalarRelationFilter, menuWhereInput>
     diskon?: XOR<DiskonScalarRelationFilter, diskonWhereInput>
+    menu?: XOR<MenuScalarRelationFilter, menuWhereInput>
   }
 
   export type menu_diskonOrderByWithRelationInput = {
     id?: SortOrder
     id_menu?: SortOrder
     id_diskon?: SortOrder
-    menu?: menuOrderByWithRelationInput
     diskon?: diskonOrderByWithRelationInput
+    menu?: menuOrderByWithRelationInput
   }
 
   export type menu_diskonWhereUniqueInput = Prisma.AtLeast<{
@@ -11584,8 +11546,8 @@ export namespace Prisma {
     NOT?: menu_diskonWhereInput | menu_diskonWhereInput[]
     id_menu?: IntFilter<"menu_diskon"> | number
     id_diskon?: IntFilter<"menu_diskon"> | number
-    menu?: XOR<MenuScalarRelationFilter, menuWhereInput>
     diskon?: XOR<DiskonScalarRelationFilter, diskonWhereInput>
+    menu?: XOR<MenuScalarRelationFilter, menuWhereInput>
   }, "id">
 
   export type menu_diskonOrderByWithAggregationInput = {
@@ -11613,26 +11575,26 @@ export namespace Prisma {
     OR?: transaksiWhereInput[]
     NOT?: transaksiWhereInput | transaksiWhereInput[]
     id?: IntFilter<"transaksi"> | number
-    uuid?: StringFilter<"transaksi"> | string
     tanggal?: DateTimeFilter<"transaksi"> | Date | string
-    status?: EnumstatusFilter<"transaksi"> | $Enums.status
     id_stan?: IntFilter<"transaksi"> | number
     id_siswa?: IntFilter<"transaksi"> | number
-    stan?: XOR<StanScalarRelationFilter, stanWhereInput>
-    siswa?: XOR<SiswaScalarRelationFilter, siswaWhereInput>
+    uuid?: StringFilter<"transaksi"> | string
+    status?: EnumstatusFilter<"transaksi"> | $Enums.status
     detail_transaksi?: Detail_transaksiListRelationFilter
+    siswa?: XOR<SiswaScalarRelationFilter, siswaWhereInput>
+    stan?: XOR<StanScalarRelationFilter, stanWhereInput>
   }
 
   export type transaksiOrderByWithRelationInput = {
     id?: SortOrder
-    uuid?: SortOrder
     tanggal?: SortOrder
-    status?: SortOrder
     id_stan?: SortOrder
     id_siswa?: SortOrder
-    stan?: stanOrderByWithRelationInput
-    siswa?: siswaOrderByWithRelationInput
+    uuid?: SortOrder
+    status?: SortOrder
     detail_transaksi?: detail_transaksiOrderByRelationAggregateInput
+    siswa?: siswaOrderByWithRelationInput
+    stan?: stanOrderByWithRelationInput
   }
 
   export type transaksiWhereUniqueInput = Prisma.AtLeast<{
@@ -11642,21 +11604,21 @@ export namespace Prisma {
     OR?: transaksiWhereInput[]
     NOT?: transaksiWhereInput | transaksiWhereInput[]
     tanggal?: DateTimeFilter<"transaksi"> | Date | string
-    status?: EnumstatusFilter<"transaksi"> | $Enums.status
     id_stan?: IntFilter<"transaksi"> | number
     id_siswa?: IntFilter<"transaksi"> | number
-    stan?: XOR<StanScalarRelationFilter, stanWhereInput>
-    siswa?: XOR<SiswaScalarRelationFilter, siswaWhereInput>
+    status?: EnumstatusFilter<"transaksi"> | $Enums.status
     detail_transaksi?: Detail_transaksiListRelationFilter
+    siswa?: XOR<SiswaScalarRelationFilter, siswaWhereInput>
+    stan?: XOR<StanScalarRelationFilter, stanWhereInput>
   }, "id" | "uuid">
 
   export type transaksiOrderByWithAggregationInput = {
     id?: SortOrder
-    uuid?: SortOrder
     tanggal?: SortOrder
-    status?: SortOrder
     id_stan?: SortOrder
     id_siswa?: SortOrder
+    uuid?: SortOrder
+    status?: SortOrder
     _count?: transaksiCountOrderByAggregateInput
     _avg?: transaksiAvgOrderByAggregateInput
     _max?: transaksiMaxOrderByAggregateInput
@@ -11669,11 +11631,11 @@ export namespace Prisma {
     OR?: transaksiScalarWhereWithAggregatesInput[]
     NOT?: transaksiScalarWhereWithAggregatesInput | transaksiScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"transaksi"> | number
-    uuid?: StringWithAggregatesFilter<"transaksi"> | string
     tanggal?: DateTimeWithAggregatesFilter<"transaksi"> | Date | string
-    status?: EnumstatusWithAggregatesFilter<"transaksi"> | $Enums.status
     id_stan?: IntWithAggregatesFilter<"transaksi"> | number
     id_siswa?: IntWithAggregatesFilter<"transaksi"> | number
+    uuid?: StringWithAggregatesFilter<"transaksi"> | string
+    status?: EnumstatusWithAggregatesFilter<"transaksi"> | $Enums.status
   }
 
   export type detail_transaksiWhereInput = {
@@ -11682,23 +11644,23 @@ export namespace Prisma {
     NOT?: detail_transaksiWhereInput | detail_transaksiWhereInput[]
     id?: IntFilter<"detail_transaksi"> | number
     jumlah?: IntFilter<"detail_transaksi"> | number
-    catatan?: StringNullableFilter<"detail_transaksi"> | string | null
     harga_total?: DecimalFilter<"detail_transaksi"> | Decimal | DecimalJsLike | number | string
     id_transaksi?: IntFilter<"detail_transaksi"> | number
     id_menu?: IntFilter<"detail_transaksi"> | number
-    transaksi?: XOR<TransaksiScalarRelationFilter, transaksiWhereInput>
+    catatan?: StringNullableFilter<"detail_transaksi"> | string | null
     menu?: XOR<MenuScalarRelationFilter, menuWhereInput>
+    transaksi?: XOR<TransaksiScalarRelationFilter, transaksiWhereInput>
   }
 
   export type detail_transaksiOrderByWithRelationInput = {
     id?: SortOrder
     jumlah?: SortOrder
-    catatan?: SortOrderInput | SortOrder
     harga_total?: SortOrder
     id_transaksi?: SortOrder
     id_menu?: SortOrder
-    transaksi?: transaksiOrderByWithRelationInput
+    catatan?: SortOrderInput | SortOrder
     menu?: menuOrderByWithRelationInput
+    transaksi?: transaksiOrderByWithRelationInput
   }
 
   export type detail_transaksiWhereUniqueInput = Prisma.AtLeast<{
@@ -11707,21 +11669,21 @@ export namespace Prisma {
     OR?: detail_transaksiWhereInput[]
     NOT?: detail_transaksiWhereInput | detail_transaksiWhereInput[]
     jumlah?: IntFilter<"detail_transaksi"> | number
-    catatan?: StringNullableFilter<"detail_transaksi"> | string | null
     harga_total?: DecimalFilter<"detail_transaksi"> | Decimal | DecimalJsLike | number | string
     id_transaksi?: IntFilter<"detail_transaksi"> | number
     id_menu?: IntFilter<"detail_transaksi"> | number
-    transaksi?: XOR<TransaksiScalarRelationFilter, transaksiWhereInput>
+    catatan?: StringNullableFilter<"detail_transaksi"> | string | null
     menu?: XOR<MenuScalarRelationFilter, menuWhereInput>
+    transaksi?: XOR<TransaksiScalarRelationFilter, transaksiWhereInput>
   }, "id">
 
   export type detail_transaksiOrderByWithAggregationInput = {
     id?: SortOrder
     jumlah?: SortOrder
-    catatan?: SortOrderInput | SortOrder
     harga_total?: SortOrder
     id_transaksi?: SortOrder
     id_menu?: SortOrder
+    catatan?: SortOrderInput | SortOrder
     _count?: detail_transaksiCountOrderByAggregateInput
     _avg?: detail_transaksiAvgOrderByAggregateInput
     _max?: detail_transaksiMaxOrderByAggregateInput
@@ -11735,10 +11697,10 @@ export namespace Prisma {
     NOT?: detail_transaksiScalarWhereWithAggregatesInput | detail_transaksiScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"detail_transaksi"> | number
     jumlah?: IntWithAggregatesFilter<"detail_transaksi"> | number
-    catatan?: StringNullableWithAggregatesFilter<"detail_transaksi"> | string | null
     harga_total?: DecimalWithAggregatesFilter<"detail_transaksi"> | Decimal | DecimalJsLike | number | string
     id_transaksi?: IntWithAggregatesFilter<"detail_transaksi"> | number
     id_menu?: IntWithAggregatesFilter<"detail_transaksi"> | number
+    catatan?: StringNullableWithAggregatesFilter<"detail_transaksi"> | string | null
   }
 
   export type usersCreateInput = {
@@ -11815,7 +11777,7 @@ export namespace Prisma {
     alamat: string
     telepon: string
     foto: string
-    user?: usersCreateNestedOneWithoutSiswaInput
+    user: usersCreateNestedOneWithoutSiswaInput
     transaksi?: transaksiCreateNestedManyWithoutSiswaInput
   }
 
@@ -11836,7 +11798,7 @@ export namespace Prisma {
     alamat?: StringFieldUpdateOperationsInput | string
     telepon?: StringFieldUpdateOperationsInput | string
     foto?: StringFieldUpdateOperationsInput | string
-    user?: usersUpdateOneWithoutSiswaNestedInput
+    user?: usersUpdateOneRequiredWithoutSiswaNestedInput
     transaksi?: transaksiUpdateManyWithoutSiswaNestedInput
   }
 
@@ -11883,10 +11845,10 @@ export namespace Prisma {
     nama_stan: string
     nama_pemilik: string
     telepon: string
-    user?: usersCreateNestedOneWithoutStanInput
-    menu?: menuCreateNestedManyWithoutStanInput
-    transaksi?: transaksiCreateNestedManyWithoutStanInput
     diskon?: diskonCreateNestedManyWithoutStanInput
+    menu?: menuCreateNestedManyWithoutStanInput
+    user: usersCreateNestedOneWithoutStanInput
+    transaksi?: transaksiCreateNestedManyWithoutStanInput
   }
 
   export type stanUncheckedCreateInput = {
@@ -11895,19 +11857,19 @@ export namespace Prisma {
     nama_pemilik: string
     telepon: string
     id_user: number
+    diskon?: diskonUncheckedCreateNestedManyWithoutStanInput
     menu?: menuUncheckedCreateNestedManyWithoutStanInput
     transaksi?: transaksiUncheckedCreateNestedManyWithoutStanInput
-    diskon?: diskonUncheckedCreateNestedManyWithoutStanInput
   }
 
   export type stanUpdateInput = {
     nama_stan?: StringFieldUpdateOperationsInput | string
     nama_pemilik?: StringFieldUpdateOperationsInput | string
     telepon?: StringFieldUpdateOperationsInput | string
-    user?: usersUpdateOneWithoutStanNestedInput
-    menu?: menuUpdateManyWithoutStanNestedInput
-    transaksi?: transaksiUpdateManyWithoutStanNestedInput
     diskon?: diskonUpdateManyWithoutStanNestedInput
+    menu?: menuUpdateManyWithoutStanNestedInput
+    user?: usersUpdateOneRequiredWithoutStanNestedInput
+    transaksi?: transaksiUpdateManyWithoutStanNestedInput
   }
 
   export type stanUncheckedUpdateInput = {
@@ -11916,9 +11878,9 @@ export namespace Prisma {
     nama_pemilik?: StringFieldUpdateOperationsInput | string
     telepon?: StringFieldUpdateOperationsInput | string
     id_user?: IntFieldUpdateOperationsInput | number
+    diskon?: diskonUncheckedUpdateManyWithoutStanNestedInput
     menu?: menuUncheckedUpdateManyWithoutStanNestedInput
     transaksi?: transaksiUncheckedUpdateManyWithoutStanNestedInput
-    diskon?: diskonUncheckedUpdateManyWithoutStanNestedInput
   }
 
   export type stanCreateManyInput = {
@@ -11949,9 +11911,9 @@ export namespace Prisma {
     jenis: $Enums.jenis
     foto: string
     deskripsi: string
+    detail_transaksi?: detail_transaksiCreateNestedManyWithoutMenuInput
     stan: stanCreateNestedOneWithoutMenuInput
     menu_diskon?: menu_diskonCreateNestedManyWithoutMenuInput
-    detail_transaksi?: detail_transaksiCreateNestedManyWithoutMenuInput
   }
 
   export type menuUncheckedCreateInput = {
@@ -11962,8 +11924,8 @@ export namespace Prisma {
     foto: string
     deskripsi: string
     id_stan: number
-    menu_diskon?: menu_diskonUncheckedCreateNestedManyWithoutMenuInput
     detail_transaksi?: detail_transaksiUncheckedCreateNestedManyWithoutMenuInput
+    menu_diskon?: menu_diskonUncheckedCreateNestedManyWithoutMenuInput
   }
 
   export type menuUpdateInput = {
@@ -11972,9 +11934,9 @@ export namespace Prisma {
     jenis?: EnumjenisFieldUpdateOperationsInput | $Enums.jenis
     foto?: StringFieldUpdateOperationsInput | string
     deskripsi?: StringFieldUpdateOperationsInput | string
+    detail_transaksi?: detail_transaksiUpdateManyWithoutMenuNestedInput
     stan?: stanUpdateOneRequiredWithoutMenuNestedInput
     menu_diskon?: menu_diskonUpdateManyWithoutMenuNestedInput
-    detail_transaksi?: detail_transaksiUpdateManyWithoutMenuNestedInput
   }
 
   export type menuUncheckedUpdateInput = {
@@ -11985,8 +11947,8 @@ export namespace Prisma {
     foto?: StringFieldUpdateOperationsInput | string
     deskripsi?: StringFieldUpdateOperationsInput | string
     id_stan?: IntFieldUpdateOperationsInput | number
-    menu_diskon?: menu_diskonUncheckedUpdateManyWithoutMenuNestedInput
     detail_transaksi?: detail_transaksiUncheckedUpdateManyWithoutMenuNestedInput
+    menu_diskon?: menu_diskonUncheckedUpdateManyWithoutMenuNestedInput
   }
 
   export type menuCreateManyInput = {
@@ -12081,8 +12043,8 @@ export namespace Prisma {
   }
 
   export type menu_diskonCreateInput = {
-    menu: menuCreateNestedOneWithoutMenu_diskonInput
     diskon: diskonCreateNestedOneWithoutMenu_diskonInput
+    menu: menuCreateNestedOneWithoutMenu_diskonInput
   }
 
   export type menu_diskonUncheckedCreateInput = {
@@ -12092,8 +12054,8 @@ export namespace Prisma {
   }
 
   export type menu_diskonUpdateInput = {
-    menu?: menuUpdateOneRequiredWithoutMenu_diskonNestedInput
     diskon?: diskonUpdateOneRequiredWithoutMenu_diskonNestedInput
+    menu?: menuUpdateOneRequiredWithoutMenu_diskonNestedInput
   }
 
   export type menu_diskonUncheckedUpdateInput = {
@@ -12119,123 +12081,123 @@ export namespace Prisma {
   }
 
   export type transaksiCreateInput = {
-    uuid: string
     tanggal?: Date | string
+    uuid: string
     status?: $Enums.status
-    stan: stanCreateNestedOneWithoutTransaksiInput
-    siswa: siswaCreateNestedOneWithoutTransaksiInput
     detail_transaksi?: detail_transaksiCreateNestedManyWithoutTransaksiInput
+    siswa: siswaCreateNestedOneWithoutTransaksiInput
+    stan: stanCreateNestedOneWithoutTransaksiInput
   }
 
   export type transaksiUncheckedCreateInput = {
     id?: number
-    uuid: string
     tanggal?: Date | string
-    status?: $Enums.status
     id_stan: number
     id_siswa: number
+    uuid: string
+    status?: $Enums.status
     detail_transaksi?: detail_transaksiUncheckedCreateNestedManyWithoutTransaksiInput
   }
 
   export type transaksiUpdateInput = {
-    uuid?: StringFieldUpdateOperationsInput | string
     tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
+    uuid?: StringFieldUpdateOperationsInput | string
     status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
-    stan?: stanUpdateOneRequiredWithoutTransaksiNestedInput
-    siswa?: siswaUpdateOneRequiredWithoutTransaksiNestedInput
     detail_transaksi?: detail_transaksiUpdateManyWithoutTransaksiNestedInput
+    siswa?: siswaUpdateOneRequiredWithoutTransaksiNestedInput
+    stan?: stanUpdateOneRequiredWithoutTransaksiNestedInput
   }
 
   export type transaksiUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    uuid?: StringFieldUpdateOperationsInput | string
     tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
     id_stan?: IntFieldUpdateOperationsInput | number
     id_siswa?: IntFieldUpdateOperationsInput | number
+    uuid?: StringFieldUpdateOperationsInput | string
+    status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
     detail_transaksi?: detail_transaksiUncheckedUpdateManyWithoutTransaksiNestedInput
   }
 
   export type transaksiCreateManyInput = {
     id?: number
-    uuid: string
     tanggal?: Date | string
-    status?: $Enums.status
     id_stan: number
     id_siswa: number
+    uuid: string
+    status?: $Enums.status
   }
 
   export type transaksiUpdateManyMutationInput = {
-    uuid?: StringFieldUpdateOperationsInput | string
     tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
+    uuid?: StringFieldUpdateOperationsInput | string
     status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
   }
 
   export type transaksiUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    uuid?: StringFieldUpdateOperationsInput | string
     tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
     id_stan?: IntFieldUpdateOperationsInput | number
     id_siswa?: IntFieldUpdateOperationsInput | number
+    uuid?: StringFieldUpdateOperationsInput | string
+    status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
   }
 
   export type detail_transaksiCreateInput = {
     jumlah: number
-    catatan?: string | null
     harga_total: Decimal | DecimalJsLike | number | string
-    transaksi: transaksiCreateNestedOneWithoutDetail_transaksiInput
+    catatan?: string | null
     menu: menuCreateNestedOneWithoutDetail_transaksiInput
+    transaksi: transaksiCreateNestedOneWithoutDetail_transaksiInput
   }
 
   export type detail_transaksiUncheckedCreateInput = {
     id?: number
     jumlah: number
-    catatan?: string | null
     harga_total: Decimal | DecimalJsLike | number | string
     id_transaksi: number
     id_menu: number
+    catatan?: string | null
   }
 
   export type detail_transaksiUpdateInput = {
     jumlah?: IntFieldUpdateOperationsInput | number
-    catatan?: NullableStringFieldUpdateOperationsInput | string | null
     harga_total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    transaksi?: transaksiUpdateOneRequiredWithoutDetail_transaksiNestedInput
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
     menu?: menuUpdateOneRequiredWithoutDetail_transaksiNestedInput
+    transaksi?: transaksiUpdateOneRequiredWithoutDetail_transaksiNestedInput
   }
 
   export type detail_transaksiUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     jumlah?: IntFieldUpdateOperationsInput | number
-    catatan?: NullableStringFieldUpdateOperationsInput | string | null
     harga_total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     id_transaksi?: IntFieldUpdateOperationsInput | number
     id_menu?: IntFieldUpdateOperationsInput | number
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type detail_transaksiCreateManyInput = {
     id?: number
     jumlah: number
-    catatan?: string | null
     harga_total: Decimal | DecimalJsLike | number | string
     id_transaksi: number
     id_menu: number
+    catatan?: string | null
   }
 
   export type detail_transaksiUpdateManyMutationInput = {
     jumlah?: IntFieldUpdateOperationsInput | number
-    catatan?: NullableStringFieldUpdateOperationsInput | string | null
     harga_total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type detail_transaksiUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     jumlah?: IntFieldUpdateOperationsInput | number
-    catatan?: NullableStringFieldUpdateOperationsInput | string | null
     harga_total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     id_transaksi?: IntFieldUpdateOperationsInput | number
     id_menu?: IntFieldUpdateOperationsInput | number
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -12395,9 +12357,9 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type UsersNullableScalarRelationFilter = {
-    is?: usersWhereInput | null
-    isNot?: usersWhereInput | null
+  export type UsersScalarRelationFilter = {
+    is?: usersWhereInput
+    isNot?: usersWhereInput
   }
 
   export type TransaksiListRelationFilter = {
@@ -12450,23 +12412,23 @@ export namespace Prisma {
     id_user?: SortOrder
   }
 
-  export type MenuListRelationFilter = {
-    every?: menuWhereInput
-    some?: menuWhereInput
-    none?: menuWhereInput
-  }
-
   export type DiskonListRelationFilter = {
     every?: diskonWhereInput
     some?: diskonWhereInput
     none?: diskonWhereInput
   }
 
-  export type menuOrderByRelationAggregateInput = {
-    _count?: SortOrder
+  export type MenuListRelationFilter = {
+    every?: menuWhereInput
+    some?: menuWhereInput
+    none?: menuWhereInput
   }
 
   export type diskonOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type menuOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -12522,6 +12484,12 @@ export namespace Prisma {
     not?: NestedEnumjenisFilter<$PrismaModel> | $Enums.jenis
   }
 
+  export type Detail_transaksiListRelationFilter = {
+    every?: detail_transaksiWhereInput
+    some?: detail_transaksiWhereInput
+    none?: detail_transaksiWhereInput
+  }
+
   export type StanScalarRelationFilter = {
     is?: stanWhereInput
     isNot?: stanWhereInput
@@ -12533,17 +12501,11 @@ export namespace Prisma {
     none?: menu_diskonWhereInput
   }
 
-  export type Detail_transaksiListRelationFilter = {
-    every?: detail_transaksiWhereInput
-    some?: detail_transaksiWhereInput
-    none?: detail_transaksiWhereInput
-  }
-
-  export type menu_diskonOrderByRelationAggregateInput = {
+  export type detail_transaksiOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type detail_transaksiOrderByRelationAggregateInput = {
+  export type menu_diskonOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -12681,14 +12643,14 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
-  export type MenuScalarRelationFilter = {
-    is?: menuWhereInput
-    isNot?: menuWhereInput
-  }
-
   export type DiskonScalarRelationFilter = {
     is?: diskonWhereInput
     isNot?: diskonWhereInput
+  }
+
+  export type MenuScalarRelationFilter = {
+    is?: menuWhereInput
+    isNot?: menuWhereInput
   }
 
   export type menu_diskonCountOrderByAggregateInput = {
@@ -12735,11 +12697,11 @@ export namespace Prisma {
 
   export type transaksiCountOrderByAggregateInput = {
     id?: SortOrder
-    uuid?: SortOrder
     tanggal?: SortOrder
-    status?: SortOrder
     id_stan?: SortOrder
     id_siswa?: SortOrder
+    uuid?: SortOrder
+    status?: SortOrder
   }
 
   export type transaksiAvgOrderByAggregateInput = {
@@ -12750,20 +12712,20 @@ export namespace Prisma {
 
   export type transaksiMaxOrderByAggregateInput = {
     id?: SortOrder
-    uuid?: SortOrder
     tanggal?: SortOrder
-    status?: SortOrder
     id_stan?: SortOrder
     id_siswa?: SortOrder
+    uuid?: SortOrder
+    status?: SortOrder
   }
 
   export type transaksiMinOrderByAggregateInput = {
     id?: SortOrder
-    uuid?: SortOrder
     tanggal?: SortOrder
-    status?: SortOrder
     id_stan?: SortOrder
     id_siswa?: SortOrder
+    uuid?: SortOrder
+    status?: SortOrder
   }
 
   export type transaksiSumOrderByAggregateInput = {
@@ -12810,10 +12772,10 @@ export namespace Prisma {
   export type detail_transaksiCountOrderByAggregateInput = {
     id?: SortOrder
     jumlah?: SortOrder
-    catatan?: SortOrder
     harga_total?: SortOrder
     id_transaksi?: SortOrder
     id_menu?: SortOrder
+    catatan?: SortOrder
   }
 
   export type detail_transaksiAvgOrderByAggregateInput = {
@@ -12827,19 +12789,19 @@ export namespace Prisma {
   export type detail_transaksiMaxOrderByAggregateInput = {
     id?: SortOrder
     jumlah?: SortOrder
-    catatan?: SortOrder
     harga_total?: SortOrder
     id_transaksi?: SortOrder
     id_menu?: SortOrder
+    catatan?: SortOrder
   }
 
   export type detail_transaksiMinOrderByAggregateInput = {
     id?: SortOrder
     jumlah?: SortOrder
-    catatan?: SortOrder
     harga_total?: SortOrder
     id_transaksi?: SortOrder
     id_menu?: SortOrder
+    catatan?: SortOrder
   }
 
   export type detail_transaksiSumOrderByAggregateInput = {
@@ -12992,12 +12954,10 @@ export namespace Prisma {
     connect?: transaksiWhereUniqueInput | transaksiWhereUniqueInput[]
   }
 
-  export type usersUpdateOneWithoutSiswaNestedInput = {
+  export type usersUpdateOneRequiredWithoutSiswaNestedInput = {
     create?: XOR<usersCreateWithoutSiswaInput, usersUncheckedCreateWithoutSiswaInput>
     connectOrCreate?: usersCreateOrConnectWithoutSiswaInput
     upsert?: usersUpsertWithoutSiswaInput
-    disconnect?: usersWhereInput | boolean
-    delete?: usersWhereInput | boolean
     connect?: usersWhereUniqueInput
     update?: XOR<XOR<usersUpdateToOneWithWhereWithoutSiswaInput, usersUpdateWithoutSiswaInput>, usersUncheckedUpdateWithoutSiswaInput>
   }
@@ -13030,10 +12990,11 @@ export namespace Prisma {
     deleteMany?: transaksiScalarWhereInput | transaksiScalarWhereInput[]
   }
 
-  export type usersCreateNestedOneWithoutStanInput = {
-    create?: XOR<usersCreateWithoutStanInput, usersUncheckedCreateWithoutStanInput>
-    connectOrCreate?: usersCreateOrConnectWithoutStanInput
-    connect?: usersWhereUniqueInput
+  export type diskonCreateNestedManyWithoutStanInput = {
+    create?: XOR<diskonCreateWithoutStanInput, diskonUncheckedCreateWithoutStanInput> | diskonCreateWithoutStanInput[] | diskonUncheckedCreateWithoutStanInput[]
+    connectOrCreate?: diskonCreateOrConnectWithoutStanInput | diskonCreateOrConnectWithoutStanInput[]
+    createMany?: diskonCreateManyStanInputEnvelope
+    connect?: diskonWhereUniqueInput | diskonWhereUniqueInput[]
   }
 
   export type menuCreateNestedManyWithoutStanInput = {
@@ -13043,6 +13004,12 @@ export namespace Prisma {
     connect?: menuWhereUniqueInput | menuWhereUniqueInput[]
   }
 
+  export type usersCreateNestedOneWithoutStanInput = {
+    create?: XOR<usersCreateWithoutStanInput, usersUncheckedCreateWithoutStanInput>
+    connectOrCreate?: usersCreateOrConnectWithoutStanInput
+    connect?: usersWhereUniqueInput
+  }
+
   export type transaksiCreateNestedManyWithoutStanInput = {
     create?: XOR<transaksiCreateWithoutStanInput, transaksiUncheckedCreateWithoutStanInput> | transaksiCreateWithoutStanInput[] | transaksiUncheckedCreateWithoutStanInput[]
     connectOrCreate?: transaksiCreateOrConnectWithoutStanInput | transaksiCreateOrConnectWithoutStanInput[]
@@ -13050,7 +13017,7 @@ export namespace Prisma {
     connect?: transaksiWhereUniqueInput | transaksiWhereUniqueInput[]
   }
 
-  export type diskonCreateNestedManyWithoutStanInput = {
+  export type diskonUncheckedCreateNestedManyWithoutStanInput = {
     create?: XOR<diskonCreateWithoutStanInput, diskonUncheckedCreateWithoutStanInput> | diskonCreateWithoutStanInput[] | diskonUncheckedCreateWithoutStanInput[]
     connectOrCreate?: diskonCreateOrConnectWithoutStanInput | diskonCreateOrConnectWithoutStanInput[]
     createMany?: diskonCreateManyStanInputEnvelope
@@ -13071,21 +13038,18 @@ export namespace Prisma {
     connect?: transaksiWhereUniqueInput | transaksiWhereUniqueInput[]
   }
 
-  export type diskonUncheckedCreateNestedManyWithoutStanInput = {
+  export type diskonUpdateManyWithoutStanNestedInput = {
     create?: XOR<diskonCreateWithoutStanInput, diskonUncheckedCreateWithoutStanInput> | diskonCreateWithoutStanInput[] | diskonUncheckedCreateWithoutStanInput[]
     connectOrCreate?: diskonCreateOrConnectWithoutStanInput | diskonCreateOrConnectWithoutStanInput[]
+    upsert?: diskonUpsertWithWhereUniqueWithoutStanInput | diskonUpsertWithWhereUniqueWithoutStanInput[]
     createMany?: diskonCreateManyStanInputEnvelope
+    set?: diskonWhereUniqueInput | diskonWhereUniqueInput[]
+    disconnect?: diskonWhereUniqueInput | diskonWhereUniqueInput[]
+    delete?: diskonWhereUniqueInput | diskonWhereUniqueInput[]
     connect?: diskonWhereUniqueInput | diskonWhereUniqueInput[]
-  }
-
-  export type usersUpdateOneWithoutStanNestedInput = {
-    create?: XOR<usersCreateWithoutStanInput, usersUncheckedCreateWithoutStanInput>
-    connectOrCreate?: usersCreateOrConnectWithoutStanInput
-    upsert?: usersUpsertWithoutStanInput
-    disconnect?: usersWhereInput | boolean
-    delete?: usersWhereInput | boolean
-    connect?: usersWhereUniqueInput
-    update?: XOR<XOR<usersUpdateToOneWithWhereWithoutStanInput, usersUpdateWithoutStanInput>, usersUncheckedUpdateWithoutStanInput>
+    update?: diskonUpdateWithWhereUniqueWithoutStanInput | diskonUpdateWithWhereUniqueWithoutStanInput[]
+    updateMany?: diskonUpdateManyWithWhereWithoutStanInput | diskonUpdateManyWithWhereWithoutStanInput[]
+    deleteMany?: diskonScalarWhereInput | diskonScalarWhereInput[]
   }
 
   export type menuUpdateManyWithoutStanNestedInput = {
@@ -13102,6 +13066,14 @@ export namespace Prisma {
     deleteMany?: menuScalarWhereInput | menuScalarWhereInput[]
   }
 
+  export type usersUpdateOneRequiredWithoutStanNestedInput = {
+    create?: XOR<usersCreateWithoutStanInput, usersUncheckedCreateWithoutStanInput>
+    connectOrCreate?: usersCreateOrConnectWithoutStanInput
+    upsert?: usersUpsertWithoutStanInput
+    connect?: usersWhereUniqueInput
+    update?: XOR<XOR<usersUpdateToOneWithWhereWithoutStanInput, usersUpdateWithoutStanInput>, usersUncheckedUpdateWithoutStanInput>
+  }
+
   export type transaksiUpdateManyWithoutStanNestedInput = {
     create?: XOR<transaksiCreateWithoutStanInput, transaksiUncheckedCreateWithoutStanInput> | transaksiCreateWithoutStanInput[] | transaksiUncheckedCreateWithoutStanInput[]
     connectOrCreate?: transaksiCreateOrConnectWithoutStanInput | transaksiCreateOrConnectWithoutStanInput[]
@@ -13116,7 +13088,7 @@ export namespace Prisma {
     deleteMany?: transaksiScalarWhereInput | transaksiScalarWhereInput[]
   }
 
-  export type diskonUpdateManyWithoutStanNestedInput = {
+  export type diskonUncheckedUpdateManyWithoutStanNestedInput = {
     create?: XOR<diskonCreateWithoutStanInput, diskonUncheckedCreateWithoutStanInput> | diskonCreateWithoutStanInput[] | diskonUncheckedCreateWithoutStanInput[]
     connectOrCreate?: diskonCreateOrConnectWithoutStanInput | diskonCreateOrConnectWithoutStanInput[]
     upsert?: diskonUpsertWithWhereUniqueWithoutStanInput | diskonUpsertWithWhereUniqueWithoutStanInput[]
@@ -13158,18 +13130,11 @@ export namespace Prisma {
     deleteMany?: transaksiScalarWhereInput | transaksiScalarWhereInput[]
   }
 
-  export type diskonUncheckedUpdateManyWithoutStanNestedInput = {
-    create?: XOR<diskonCreateWithoutStanInput, diskonUncheckedCreateWithoutStanInput> | diskonCreateWithoutStanInput[] | diskonUncheckedCreateWithoutStanInput[]
-    connectOrCreate?: diskonCreateOrConnectWithoutStanInput | diskonCreateOrConnectWithoutStanInput[]
-    upsert?: diskonUpsertWithWhereUniqueWithoutStanInput | diskonUpsertWithWhereUniqueWithoutStanInput[]
-    createMany?: diskonCreateManyStanInputEnvelope
-    set?: diskonWhereUniqueInput | diskonWhereUniqueInput[]
-    disconnect?: diskonWhereUniqueInput | diskonWhereUniqueInput[]
-    delete?: diskonWhereUniqueInput | diskonWhereUniqueInput[]
-    connect?: diskonWhereUniqueInput | diskonWhereUniqueInput[]
-    update?: diskonUpdateWithWhereUniqueWithoutStanInput | diskonUpdateWithWhereUniqueWithoutStanInput[]
-    updateMany?: diskonUpdateManyWithWhereWithoutStanInput | diskonUpdateManyWithWhereWithoutStanInput[]
-    deleteMany?: diskonScalarWhereInput | diskonScalarWhereInput[]
+  export type detail_transaksiCreateNestedManyWithoutMenuInput = {
+    create?: XOR<detail_transaksiCreateWithoutMenuInput, detail_transaksiUncheckedCreateWithoutMenuInput> | detail_transaksiCreateWithoutMenuInput[] | detail_transaksiUncheckedCreateWithoutMenuInput[]
+    connectOrCreate?: detail_transaksiCreateOrConnectWithoutMenuInput | detail_transaksiCreateOrConnectWithoutMenuInput[]
+    createMany?: detail_transaksiCreateManyMenuInputEnvelope
+    connect?: detail_transaksiWhereUniqueInput | detail_transaksiWhereUniqueInput[]
   }
 
   export type stanCreateNestedOneWithoutMenuInput = {
@@ -13185,7 +13150,7 @@ export namespace Prisma {
     connect?: menu_diskonWhereUniqueInput | menu_diskonWhereUniqueInput[]
   }
 
-  export type detail_transaksiCreateNestedManyWithoutMenuInput = {
+  export type detail_transaksiUncheckedCreateNestedManyWithoutMenuInput = {
     create?: XOR<detail_transaksiCreateWithoutMenuInput, detail_transaksiUncheckedCreateWithoutMenuInput> | detail_transaksiCreateWithoutMenuInput[] | detail_transaksiUncheckedCreateWithoutMenuInput[]
     connectOrCreate?: detail_transaksiCreateOrConnectWithoutMenuInput | detail_transaksiCreateOrConnectWithoutMenuInput[]
     createMany?: detail_transaksiCreateManyMenuInputEnvelope
@@ -13199,13 +13164,6 @@ export namespace Prisma {
     connect?: menu_diskonWhereUniqueInput | menu_diskonWhereUniqueInput[]
   }
 
-  export type detail_transaksiUncheckedCreateNestedManyWithoutMenuInput = {
-    create?: XOR<detail_transaksiCreateWithoutMenuInput, detail_transaksiUncheckedCreateWithoutMenuInput> | detail_transaksiCreateWithoutMenuInput[] | detail_transaksiUncheckedCreateWithoutMenuInput[]
-    connectOrCreate?: detail_transaksiCreateOrConnectWithoutMenuInput | detail_transaksiCreateOrConnectWithoutMenuInput[]
-    createMany?: detail_transaksiCreateManyMenuInputEnvelope
-    connect?: detail_transaksiWhereUniqueInput | detail_transaksiWhereUniqueInput[]
-  }
-
   export type DecimalFieldUpdateOperationsInput = {
     set?: Decimal | DecimalJsLike | number | string
     increment?: Decimal | DecimalJsLike | number | string
@@ -13216,28 +13174,6 @@ export namespace Prisma {
 
   export type EnumjenisFieldUpdateOperationsInput = {
     set?: $Enums.jenis
-  }
-
-  export type stanUpdateOneRequiredWithoutMenuNestedInput = {
-    create?: XOR<stanCreateWithoutMenuInput, stanUncheckedCreateWithoutMenuInput>
-    connectOrCreate?: stanCreateOrConnectWithoutMenuInput
-    upsert?: stanUpsertWithoutMenuInput
-    connect?: stanWhereUniqueInput
-    update?: XOR<XOR<stanUpdateToOneWithWhereWithoutMenuInput, stanUpdateWithoutMenuInput>, stanUncheckedUpdateWithoutMenuInput>
-  }
-
-  export type menu_diskonUpdateManyWithoutMenuNestedInput = {
-    create?: XOR<menu_diskonCreateWithoutMenuInput, menu_diskonUncheckedCreateWithoutMenuInput> | menu_diskonCreateWithoutMenuInput[] | menu_diskonUncheckedCreateWithoutMenuInput[]
-    connectOrCreate?: menu_diskonCreateOrConnectWithoutMenuInput | menu_diskonCreateOrConnectWithoutMenuInput[]
-    upsert?: menu_diskonUpsertWithWhereUniqueWithoutMenuInput | menu_diskonUpsertWithWhereUniqueWithoutMenuInput[]
-    createMany?: menu_diskonCreateManyMenuInputEnvelope
-    set?: menu_diskonWhereUniqueInput | menu_diskonWhereUniqueInput[]
-    disconnect?: menu_diskonWhereUniqueInput | menu_diskonWhereUniqueInput[]
-    delete?: menu_diskonWhereUniqueInput | menu_diskonWhereUniqueInput[]
-    connect?: menu_diskonWhereUniqueInput | menu_diskonWhereUniqueInput[]
-    update?: menu_diskonUpdateWithWhereUniqueWithoutMenuInput | menu_diskonUpdateWithWhereUniqueWithoutMenuInput[]
-    updateMany?: menu_diskonUpdateManyWithWhereWithoutMenuInput | menu_diskonUpdateManyWithWhereWithoutMenuInput[]
-    deleteMany?: menu_diskonScalarWhereInput | menu_diskonScalarWhereInput[]
   }
 
   export type detail_transaksiUpdateManyWithoutMenuNestedInput = {
@@ -13254,7 +13190,15 @@ export namespace Prisma {
     deleteMany?: detail_transaksiScalarWhereInput | detail_transaksiScalarWhereInput[]
   }
 
-  export type menu_diskonUncheckedUpdateManyWithoutMenuNestedInput = {
+  export type stanUpdateOneRequiredWithoutMenuNestedInput = {
+    create?: XOR<stanCreateWithoutMenuInput, stanUncheckedCreateWithoutMenuInput>
+    connectOrCreate?: stanCreateOrConnectWithoutMenuInput
+    upsert?: stanUpsertWithoutMenuInput
+    connect?: stanWhereUniqueInput
+    update?: XOR<XOR<stanUpdateToOneWithWhereWithoutMenuInput, stanUpdateWithoutMenuInput>, stanUncheckedUpdateWithoutMenuInput>
+  }
+
+  export type menu_diskonUpdateManyWithoutMenuNestedInput = {
     create?: XOR<menu_diskonCreateWithoutMenuInput, menu_diskonUncheckedCreateWithoutMenuInput> | menu_diskonCreateWithoutMenuInput[] | menu_diskonUncheckedCreateWithoutMenuInput[]
     connectOrCreate?: menu_diskonCreateOrConnectWithoutMenuInput | menu_diskonCreateOrConnectWithoutMenuInput[]
     upsert?: menu_diskonUpsertWithWhereUniqueWithoutMenuInput | menu_diskonUpsertWithWhereUniqueWithoutMenuInput[]
@@ -13280,6 +13224,20 @@ export namespace Prisma {
     update?: detail_transaksiUpdateWithWhereUniqueWithoutMenuInput | detail_transaksiUpdateWithWhereUniqueWithoutMenuInput[]
     updateMany?: detail_transaksiUpdateManyWithWhereWithoutMenuInput | detail_transaksiUpdateManyWithWhereWithoutMenuInput[]
     deleteMany?: detail_transaksiScalarWhereInput | detail_transaksiScalarWhereInput[]
+  }
+
+  export type menu_diskonUncheckedUpdateManyWithoutMenuNestedInput = {
+    create?: XOR<menu_diskonCreateWithoutMenuInput, menu_diskonUncheckedCreateWithoutMenuInput> | menu_diskonCreateWithoutMenuInput[] | menu_diskonUncheckedCreateWithoutMenuInput[]
+    connectOrCreate?: menu_diskonCreateOrConnectWithoutMenuInput | menu_diskonCreateOrConnectWithoutMenuInput[]
+    upsert?: menu_diskonUpsertWithWhereUniqueWithoutMenuInput | menu_diskonUpsertWithWhereUniqueWithoutMenuInput[]
+    createMany?: menu_diskonCreateManyMenuInputEnvelope
+    set?: menu_diskonWhereUniqueInput | menu_diskonWhereUniqueInput[]
+    disconnect?: menu_diskonWhereUniqueInput | menu_diskonWhereUniqueInput[]
+    delete?: menu_diskonWhereUniqueInput | menu_diskonWhereUniqueInput[]
+    connect?: menu_diskonWhereUniqueInput | menu_diskonWhereUniqueInput[]
+    update?: menu_diskonUpdateWithWhereUniqueWithoutMenuInput | menu_diskonUpdateWithWhereUniqueWithoutMenuInput[]
+    updateMany?: menu_diskonUpdateManyWithWhereWithoutMenuInput | menu_diskonUpdateManyWithWhereWithoutMenuInput[]
+    deleteMany?: menu_diskonScalarWhereInput | menu_diskonScalarWhereInput[]
   }
 
   export type stanCreateNestedOneWithoutDiskonInput = {
@@ -13346,24 +13304,16 @@ export namespace Prisma {
     deleteMany?: menu_diskonScalarWhereInput | menu_diskonScalarWhereInput[]
   }
 
-  export type menuCreateNestedOneWithoutMenu_diskonInput = {
-    create?: XOR<menuCreateWithoutMenu_diskonInput, menuUncheckedCreateWithoutMenu_diskonInput>
-    connectOrCreate?: menuCreateOrConnectWithoutMenu_diskonInput
-    connect?: menuWhereUniqueInput
-  }
-
   export type diskonCreateNestedOneWithoutMenu_diskonInput = {
     create?: XOR<diskonCreateWithoutMenu_diskonInput, diskonUncheckedCreateWithoutMenu_diskonInput>
     connectOrCreate?: diskonCreateOrConnectWithoutMenu_diskonInput
     connect?: diskonWhereUniqueInput
   }
 
-  export type menuUpdateOneRequiredWithoutMenu_diskonNestedInput = {
+  export type menuCreateNestedOneWithoutMenu_diskonInput = {
     create?: XOR<menuCreateWithoutMenu_diskonInput, menuUncheckedCreateWithoutMenu_diskonInput>
     connectOrCreate?: menuCreateOrConnectWithoutMenu_diskonInput
-    upsert?: menuUpsertWithoutMenu_diskonInput
     connect?: menuWhereUniqueInput
-    update?: XOR<XOR<menuUpdateToOneWithWhereWithoutMenu_diskonInput, menuUpdateWithoutMenu_diskonInput>, menuUncheckedUpdateWithoutMenu_diskonInput>
   }
 
   export type diskonUpdateOneRequiredWithoutMenu_diskonNestedInput = {
@@ -13374,10 +13324,19 @@ export namespace Prisma {
     update?: XOR<XOR<diskonUpdateToOneWithWhereWithoutMenu_diskonInput, diskonUpdateWithoutMenu_diskonInput>, diskonUncheckedUpdateWithoutMenu_diskonInput>
   }
 
-  export type stanCreateNestedOneWithoutTransaksiInput = {
-    create?: XOR<stanCreateWithoutTransaksiInput, stanUncheckedCreateWithoutTransaksiInput>
-    connectOrCreate?: stanCreateOrConnectWithoutTransaksiInput
-    connect?: stanWhereUniqueInput
+  export type menuUpdateOneRequiredWithoutMenu_diskonNestedInput = {
+    create?: XOR<menuCreateWithoutMenu_diskonInput, menuUncheckedCreateWithoutMenu_diskonInput>
+    connectOrCreate?: menuCreateOrConnectWithoutMenu_diskonInput
+    upsert?: menuUpsertWithoutMenu_diskonInput
+    connect?: menuWhereUniqueInput
+    update?: XOR<XOR<menuUpdateToOneWithWhereWithoutMenu_diskonInput, menuUpdateWithoutMenu_diskonInput>, menuUncheckedUpdateWithoutMenu_diskonInput>
+  }
+
+  export type detail_transaksiCreateNestedManyWithoutTransaksiInput = {
+    create?: XOR<detail_transaksiCreateWithoutTransaksiInput, detail_transaksiUncheckedCreateWithoutTransaksiInput> | detail_transaksiCreateWithoutTransaksiInput[] | detail_transaksiUncheckedCreateWithoutTransaksiInput[]
+    connectOrCreate?: detail_transaksiCreateOrConnectWithoutTransaksiInput | detail_transaksiCreateOrConnectWithoutTransaksiInput[]
+    createMany?: detail_transaksiCreateManyTransaksiInputEnvelope
+    connect?: detail_transaksiWhereUniqueInput | detail_transaksiWhereUniqueInput[]
   }
 
   export type siswaCreateNestedOneWithoutTransaksiInput = {
@@ -13386,11 +13345,10 @@ export namespace Prisma {
     connect?: siswaWhereUniqueInput
   }
 
-  export type detail_transaksiCreateNestedManyWithoutTransaksiInput = {
-    create?: XOR<detail_transaksiCreateWithoutTransaksiInput, detail_transaksiUncheckedCreateWithoutTransaksiInput> | detail_transaksiCreateWithoutTransaksiInput[] | detail_transaksiUncheckedCreateWithoutTransaksiInput[]
-    connectOrCreate?: detail_transaksiCreateOrConnectWithoutTransaksiInput | detail_transaksiCreateOrConnectWithoutTransaksiInput[]
-    createMany?: detail_transaksiCreateManyTransaksiInputEnvelope
-    connect?: detail_transaksiWhereUniqueInput | detail_transaksiWhereUniqueInput[]
+  export type stanCreateNestedOneWithoutTransaksiInput = {
+    create?: XOR<stanCreateWithoutTransaksiInput, stanUncheckedCreateWithoutTransaksiInput>
+    connectOrCreate?: stanCreateOrConnectWithoutTransaksiInput
+    connect?: stanWhereUniqueInput
   }
 
   export type detail_transaksiUncheckedCreateNestedManyWithoutTransaksiInput = {
@@ -13402,22 +13360,6 @@ export namespace Prisma {
 
   export type EnumstatusFieldUpdateOperationsInput = {
     set?: $Enums.status
-  }
-
-  export type stanUpdateOneRequiredWithoutTransaksiNestedInput = {
-    create?: XOR<stanCreateWithoutTransaksiInput, stanUncheckedCreateWithoutTransaksiInput>
-    connectOrCreate?: stanCreateOrConnectWithoutTransaksiInput
-    upsert?: stanUpsertWithoutTransaksiInput
-    connect?: stanWhereUniqueInput
-    update?: XOR<XOR<stanUpdateToOneWithWhereWithoutTransaksiInput, stanUpdateWithoutTransaksiInput>, stanUncheckedUpdateWithoutTransaksiInput>
-  }
-
-  export type siswaUpdateOneRequiredWithoutTransaksiNestedInput = {
-    create?: XOR<siswaCreateWithoutTransaksiInput, siswaUncheckedCreateWithoutTransaksiInput>
-    connectOrCreate?: siswaCreateOrConnectWithoutTransaksiInput
-    upsert?: siswaUpsertWithoutTransaksiInput
-    connect?: siswaWhereUniqueInput
-    update?: XOR<XOR<siswaUpdateToOneWithWhereWithoutTransaksiInput, siswaUpdateWithoutTransaksiInput>, siswaUncheckedUpdateWithoutTransaksiInput>
   }
 
   export type detail_transaksiUpdateManyWithoutTransaksiNestedInput = {
@@ -13434,6 +13376,22 @@ export namespace Prisma {
     deleteMany?: detail_transaksiScalarWhereInput | detail_transaksiScalarWhereInput[]
   }
 
+  export type siswaUpdateOneRequiredWithoutTransaksiNestedInput = {
+    create?: XOR<siswaCreateWithoutTransaksiInput, siswaUncheckedCreateWithoutTransaksiInput>
+    connectOrCreate?: siswaCreateOrConnectWithoutTransaksiInput
+    upsert?: siswaUpsertWithoutTransaksiInput
+    connect?: siswaWhereUniqueInput
+    update?: XOR<XOR<siswaUpdateToOneWithWhereWithoutTransaksiInput, siswaUpdateWithoutTransaksiInput>, siswaUncheckedUpdateWithoutTransaksiInput>
+  }
+
+  export type stanUpdateOneRequiredWithoutTransaksiNestedInput = {
+    create?: XOR<stanCreateWithoutTransaksiInput, stanUncheckedCreateWithoutTransaksiInput>
+    connectOrCreate?: stanCreateOrConnectWithoutTransaksiInput
+    upsert?: stanUpsertWithoutTransaksiInput
+    connect?: stanWhereUniqueInput
+    update?: XOR<XOR<stanUpdateToOneWithWhereWithoutTransaksiInput, stanUpdateWithoutTransaksiInput>, stanUncheckedUpdateWithoutTransaksiInput>
+  }
+
   export type detail_transaksiUncheckedUpdateManyWithoutTransaksiNestedInput = {
     create?: XOR<detail_transaksiCreateWithoutTransaksiInput, detail_transaksiUncheckedCreateWithoutTransaksiInput> | detail_transaksiCreateWithoutTransaksiInput[] | detail_transaksiUncheckedCreateWithoutTransaksiInput[]
     connectOrCreate?: detail_transaksiCreateOrConnectWithoutTransaksiInput | detail_transaksiCreateOrConnectWithoutTransaksiInput[]
@@ -13448,28 +13406,20 @@ export namespace Prisma {
     deleteMany?: detail_transaksiScalarWhereInput | detail_transaksiScalarWhereInput[]
   }
 
-  export type transaksiCreateNestedOneWithoutDetail_transaksiInput = {
-    create?: XOR<transaksiCreateWithoutDetail_transaksiInput, transaksiUncheckedCreateWithoutDetail_transaksiInput>
-    connectOrCreate?: transaksiCreateOrConnectWithoutDetail_transaksiInput
-    connect?: transaksiWhereUniqueInput
-  }
-
   export type menuCreateNestedOneWithoutDetail_transaksiInput = {
     create?: XOR<menuCreateWithoutDetail_transaksiInput, menuUncheckedCreateWithoutDetail_transaksiInput>
     connectOrCreate?: menuCreateOrConnectWithoutDetail_transaksiInput
     connect?: menuWhereUniqueInput
   }
 
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
-  }
-
-  export type transaksiUpdateOneRequiredWithoutDetail_transaksiNestedInput = {
+  export type transaksiCreateNestedOneWithoutDetail_transaksiInput = {
     create?: XOR<transaksiCreateWithoutDetail_transaksiInput, transaksiUncheckedCreateWithoutDetail_transaksiInput>
     connectOrCreate?: transaksiCreateOrConnectWithoutDetail_transaksiInput
-    upsert?: transaksiUpsertWithoutDetail_transaksiInput
     connect?: transaksiWhereUniqueInput
-    update?: XOR<XOR<transaksiUpdateToOneWithWhereWithoutDetail_transaksiInput, transaksiUpdateWithoutDetail_transaksiInput>, transaksiUncheckedUpdateWithoutDetail_transaksiInput>
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type menuUpdateOneRequiredWithoutDetail_transaksiNestedInput = {
@@ -13478,6 +13428,14 @@ export namespace Prisma {
     upsert?: menuUpsertWithoutDetail_transaksiInput
     connect?: menuWhereUniqueInput
     update?: XOR<XOR<menuUpdateToOneWithWhereWithoutDetail_transaksiInput, menuUpdateWithoutDetail_transaksiInput>, menuUncheckedUpdateWithoutDetail_transaksiInput>
+  }
+
+  export type transaksiUpdateOneRequiredWithoutDetail_transaksiNestedInput = {
+    create?: XOR<transaksiCreateWithoutDetail_transaksiInput, transaksiUncheckedCreateWithoutDetail_transaksiInput>
+    connectOrCreate?: transaksiCreateOrConnectWithoutDetail_transaksiInput
+    upsert?: transaksiUpsertWithoutDetail_transaksiInput
+    connect?: transaksiWhereUniqueInput
+    update?: XOR<XOR<transaksiUpdateToOneWithWhereWithoutDetail_transaksiInput, transaksiUpdateWithoutDetail_transaksiInput>, transaksiUncheckedUpdateWithoutDetail_transaksiInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -13743,9 +13701,9 @@ export namespace Prisma {
     nama_stan: string
     nama_pemilik: string
     telepon: string
+    diskon?: diskonCreateNestedManyWithoutStanInput
     menu?: menuCreateNestedManyWithoutStanInput
     transaksi?: transaksiCreateNestedManyWithoutStanInput
-    diskon?: diskonCreateNestedManyWithoutStanInput
   }
 
   export type stanUncheckedCreateWithoutUserInput = {
@@ -13753,9 +13711,9 @@ export namespace Prisma {
     nama_stan: string
     nama_pemilik: string
     telepon: string
+    diskon?: diskonUncheckedCreateNestedManyWithoutStanInput
     menu?: menuUncheckedCreateNestedManyWithoutStanInput
     transaksi?: transaksiUncheckedCreateNestedManyWithoutStanInput
-    diskon?: diskonUncheckedCreateNestedManyWithoutStanInput
   }
 
   export type stanCreateOrConnectWithoutUserInput = {
@@ -13849,19 +13807,19 @@ export namespace Prisma {
   }
 
   export type transaksiCreateWithoutSiswaInput = {
-    uuid: string
     tanggal?: Date | string
+    uuid: string
     status?: $Enums.status
-    stan: stanCreateNestedOneWithoutTransaksiInput
     detail_transaksi?: detail_transaksiCreateNestedManyWithoutTransaksiInput
+    stan: stanCreateNestedOneWithoutTransaksiInput
   }
 
   export type transaksiUncheckedCreateWithoutSiswaInput = {
     id?: number
-    uuid: string
     tanggal?: Date | string
-    status?: $Enums.status
     id_stan: number
+    uuid: string
+    status?: $Enums.status
     detail_transaksi?: detail_transaksiUncheckedCreateNestedManyWithoutTransaksiInput
   }
 
@@ -13926,93 +13884,11 @@ export namespace Prisma {
     OR?: transaksiScalarWhereInput[]
     NOT?: transaksiScalarWhereInput | transaksiScalarWhereInput[]
     id?: IntFilter<"transaksi"> | number
-    uuid?: StringFilter<"transaksi"> | string
     tanggal?: DateTimeFilter<"transaksi"> | Date | string
-    status?: EnumstatusFilter<"transaksi"> | $Enums.status
     id_stan?: IntFilter<"transaksi"> | number
     id_siswa?: IntFilter<"transaksi"> | number
-  }
-
-  export type usersCreateWithoutStanInput = {
-    username: string
-    password: string
-    role: $Enums.role
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    siswa?: siswaCreateNestedManyWithoutUserInput
-  }
-
-  export type usersUncheckedCreateWithoutStanInput = {
-    id?: number
-    username: string
-    password: string
-    role: $Enums.role
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    siswa?: siswaUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type usersCreateOrConnectWithoutStanInput = {
-    where: usersWhereUniqueInput
-    create: XOR<usersCreateWithoutStanInput, usersUncheckedCreateWithoutStanInput>
-  }
-
-  export type menuCreateWithoutStanInput = {
-    nama_menu: string
-    harga: Decimal | DecimalJsLike | number | string
-    jenis: $Enums.jenis
-    foto: string
-    deskripsi: string
-    menu_diskon?: menu_diskonCreateNestedManyWithoutMenuInput
-    detail_transaksi?: detail_transaksiCreateNestedManyWithoutMenuInput
-  }
-
-  export type menuUncheckedCreateWithoutStanInput = {
-    id?: number
-    nama_menu: string
-    harga: Decimal | DecimalJsLike | number | string
-    jenis: $Enums.jenis
-    foto: string
-    deskripsi: string
-    menu_diskon?: menu_diskonUncheckedCreateNestedManyWithoutMenuInput
-    detail_transaksi?: detail_transaksiUncheckedCreateNestedManyWithoutMenuInput
-  }
-
-  export type menuCreateOrConnectWithoutStanInput = {
-    where: menuWhereUniqueInput
-    create: XOR<menuCreateWithoutStanInput, menuUncheckedCreateWithoutStanInput>
-  }
-
-  export type menuCreateManyStanInputEnvelope = {
-    data: menuCreateManyStanInput | menuCreateManyStanInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type transaksiCreateWithoutStanInput = {
-    uuid: string
-    tanggal?: Date | string
-    status?: $Enums.status
-    siswa: siswaCreateNestedOneWithoutTransaksiInput
-    detail_transaksi?: detail_transaksiCreateNestedManyWithoutTransaksiInput
-  }
-
-  export type transaksiUncheckedCreateWithoutStanInput = {
-    id?: number
-    uuid: string
-    tanggal?: Date | string
-    status?: $Enums.status
-    id_siswa: number
-    detail_transaksi?: detail_transaksiUncheckedCreateNestedManyWithoutTransaksiInput
-  }
-
-  export type transaksiCreateOrConnectWithoutStanInput = {
-    where: transaksiWhereUniqueInput
-    create: XOR<transaksiCreateWithoutStanInput, transaksiUncheckedCreateWithoutStanInput>
-  }
-
-  export type transaksiCreateManyStanInputEnvelope = {
-    data: transaksiCreateManyStanInput | transaksiCreateManyStanInput[]
-    skipDuplicates?: boolean
+    uuid?: StringFilter<"transaksi"> | string
+    status?: EnumstatusFilter<"transaksi"> | $Enums.status
   }
 
   export type diskonCreateWithoutStanInput = {
@@ -14040,6 +13916,145 @@ export namespace Prisma {
   export type diskonCreateManyStanInputEnvelope = {
     data: diskonCreateManyStanInput | diskonCreateManyStanInput[]
     skipDuplicates?: boolean
+  }
+
+  export type menuCreateWithoutStanInput = {
+    nama_menu: string
+    harga: Decimal | DecimalJsLike | number | string
+    jenis: $Enums.jenis
+    foto: string
+    deskripsi: string
+    detail_transaksi?: detail_transaksiCreateNestedManyWithoutMenuInput
+    menu_diskon?: menu_diskonCreateNestedManyWithoutMenuInput
+  }
+
+  export type menuUncheckedCreateWithoutStanInput = {
+    id?: number
+    nama_menu: string
+    harga: Decimal | DecimalJsLike | number | string
+    jenis: $Enums.jenis
+    foto: string
+    deskripsi: string
+    detail_transaksi?: detail_transaksiUncheckedCreateNestedManyWithoutMenuInput
+    menu_diskon?: menu_diskonUncheckedCreateNestedManyWithoutMenuInput
+  }
+
+  export type menuCreateOrConnectWithoutStanInput = {
+    where: menuWhereUniqueInput
+    create: XOR<menuCreateWithoutStanInput, menuUncheckedCreateWithoutStanInput>
+  }
+
+  export type menuCreateManyStanInputEnvelope = {
+    data: menuCreateManyStanInput | menuCreateManyStanInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type usersCreateWithoutStanInput = {
+    username: string
+    password: string
+    role: $Enums.role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    siswa?: siswaCreateNestedManyWithoutUserInput
+  }
+
+  export type usersUncheckedCreateWithoutStanInput = {
+    id?: number
+    username: string
+    password: string
+    role: $Enums.role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    siswa?: siswaUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type usersCreateOrConnectWithoutStanInput = {
+    where: usersWhereUniqueInput
+    create: XOR<usersCreateWithoutStanInput, usersUncheckedCreateWithoutStanInput>
+  }
+
+  export type transaksiCreateWithoutStanInput = {
+    tanggal?: Date | string
+    uuid: string
+    status?: $Enums.status
+    detail_transaksi?: detail_transaksiCreateNestedManyWithoutTransaksiInput
+    siswa: siswaCreateNestedOneWithoutTransaksiInput
+  }
+
+  export type transaksiUncheckedCreateWithoutStanInput = {
+    id?: number
+    tanggal?: Date | string
+    id_siswa: number
+    uuid: string
+    status?: $Enums.status
+    detail_transaksi?: detail_transaksiUncheckedCreateNestedManyWithoutTransaksiInput
+  }
+
+  export type transaksiCreateOrConnectWithoutStanInput = {
+    where: transaksiWhereUniqueInput
+    create: XOR<transaksiCreateWithoutStanInput, transaksiUncheckedCreateWithoutStanInput>
+  }
+
+  export type transaksiCreateManyStanInputEnvelope = {
+    data: transaksiCreateManyStanInput | transaksiCreateManyStanInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type diskonUpsertWithWhereUniqueWithoutStanInput = {
+    where: diskonWhereUniqueInput
+    update: XOR<diskonUpdateWithoutStanInput, diskonUncheckedUpdateWithoutStanInput>
+    create: XOR<diskonCreateWithoutStanInput, diskonUncheckedCreateWithoutStanInput>
+  }
+
+  export type diskonUpdateWithWhereUniqueWithoutStanInput = {
+    where: diskonWhereUniqueInput
+    data: XOR<diskonUpdateWithoutStanInput, diskonUncheckedUpdateWithoutStanInput>
+  }
+
+  export type diskonUpdateManyWithWhereWithoutStanInput = {
+    where: diskonScalarWhereInput
+    data: XOR<diskonUpdateManyMutationInput, diskonUncheckedUpdateManyWithoutStanInput>
+  }
+
+  export type diskonScalarWhereInput = {
+    AND?: diskonScalarWhereInput | diskonScalarWhereInput[]
+    OR?: diskonScalarWhereInput[]
+    NOT?: diskonScalarWhereInput | diskonScalarWhereInput[]
+    id?: IntFilter<"diskon"> | number
+    nama_diskon?: StringFilter<"diskon"> | string
+    persentase?: FloatFilter<"diskon"> | number
+    tanggal_awal?: DateTimeFilter<"diskon"> | Date | string
+    tanggal_akhir?: DateTimeFilter<"diskon"> | Date | string
+    id_stan?: IntFilter<"diskon"> | number
+  }
+
+  export type menuUpsertWithWhereUniqueWithoutStanInput = {
+    where: menuWhereUniqueInput
+    update: XOR<menuUpdateWithoutStanInput, menuUncheckedUpdateWithoutStanInput>
+    create: XOR<menuCreateWithoutStanInput, menuUncheckedCreateWithoutStanInput>
+  }
+
+  export type menuUpdateWithWhereUniqueWithoutStanInput = {
+    where: menuWhereUniqueInput
+    data: XOR<menuUpdateWithoutStanInput, menuUncheckedUpdateWithoutStanInput>
+  }
+
+  export type menuUpdateManyWithWhereWithoutStanInput = {
+    where: menuScalarWhereInput
+    data: XOR<menuUpdateManyMutationInput, menuUncheckedUpdateManyWithoutStanInput>
+  }
+
+  export type menuScalarWhereInput = {
+    AND?: menuScalarWhereInput | menuScalarWhereInput[]
+    OR?: menuScalarWhereInput[]
+    NOT?: menuScalarWhereInput | menuScalarWhereInput[]
+    id?: IntFilter<"menu"> | number
+    nama_menu?: StringFilter<"menu"> | string
+    harga?: DecimalFilter<"menu"> | Decimal | DecimalJsLike | number | string
+    jenis?: EnumjenisFilter<"menu"> | $Enums.jenis
+    foto?: StringFilter<"menu"> | string
+    deskripsi?: StringFilter<"menu"> | string
+    id_stan?: IntFilter<"menu"> | number
   }
 
   export type usersUpsertWithoutStanInput = {
@@ -14072,35 +14087,6 @@ export namespace Prisma {
     siswa?: siswaUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type menuUpsertWithWhereUniqueWithoutStanInput = {
-    where: menuWhereUniqueInput
-    update: XOR<menuUpdateWithoutStanInput, menuUncheckedUpdateWithoutStanInput>
-    create: XOR<menuCreateWithoutStanInput, menuUncheckedCreateWithoutStanInput>
-  }
-
-  export type menuUpdateWithWhereUniqueWithoutStanInput = {
-    where: menuWhereUniqueInput
-    data: XOR<menuUpdateWithoutStanInput, menuUncheckedUpdateWithoutStanInput>
-  }
-
-  export type menuUpdateManyWithWhereWithoutStanInput = {
-    where: menuScalarWhereInput
-    data: XOR<menuUpdateManyMutationInput, menuUncheckedUpdateManyWithoutStanInput>
-  }
-
-  export type menuScalarWhereInput = {
-    AND?: menuScalarWhereInput | menuScalarWhereInput[]
-    OR?: menuScalarWhereInput[]
-    NOT?: menuScalarWhereInput | menuScalarWhereInput[]
-    id?: IntFilter<"menu"> | number
-    nama_menu?: StringFilter<"menu"> | string
-    harga?: DecimalFilter<"menu"> | Decimal | DecimalJsLike | number | string
-    jenis?: EnumjenisFilter<"menu"> | $Enums.jenis
-    foto?: StringFilter<"menu"> | string
-    deskripsi?: StringFilter<"menu"> | string
-    id_stan?: IntFilter<"menu"> | number
-  }
-
   export type transaksiUpsertWithWhereUniqueWithoutStanInput = {
     where: transaksiWhereUniqueInput
     update: XOR<transaksiUpdateWithoutStanInput, transaksiUncheckedUpdateWithoutStanInput>
@@ -14117,41 +14103,38 @@ export namespace Prisma {
     data: XOR<transaksiUpdateManyMutationInput, transaksiUncheckedUpdateManyWithoutStanInput>
   }
 
-  export type diskonUpsertWithWhereUniqueWithoutStanInput = {
-    where: diskonWhereUniqueInput
-    update: XOR<diskonUpdateWithoutStanInput, diskonUncheckedUpdateWithoutStanInput>
-    create: XOR<diskonCreateWithoutStanInput, diskonUncheckedCreateWithoutStanInput>
+  export type detail_transaksiCreateWithoutMenuInput = {
+    jumlah: number
+    harga_total: Decimal | DecimalJsLike | number | string
+    catatan?: string | null
+    transaksi: transaksiCreateNestedOneWithoutDetail_transaksiInput
   }
 
-  export type diskonUpdateWithWhereUniqueWithoutStanInput = {
-    where: diskonWhereUniqueInput
-    data: XOR<diskonUpdateWithoutStanInput, diskonUncheckedUpdateWithoutStanInput>
+  export type detail_transaksiUncheckedCreateWithoutMenuInput = {
+    id?: number
+    jumlah: number
+    harga_total: Decimal | DecimalJsLike | number | string
+    id_transaksi: number
+    catatan?: string | null
   }
 
-  export type diskonUpdateManyWithWhereWithoutStanInput = {
-    where: diskonScalarWhereInput
-    data: XOR<diskonUpdateManyMutationInput, diskonUncheckedUpdateManyWithoutStanInput>
+  export type detail_transaksiCreateOrConnectWithoutMenuInput = {
+    where: detail_transaksiWhereUniqueInput
+    create: XOR<detail_transaksiCreateWithoutMenuInput, detail_transaksiUncheckedCreateWithoutMenuInput>
   }
 
-  export type diskonScalarWhereInput = {
-    AND?: diskonScalarWhereInput | diskonScalarWhereInput[]
-    OR?: diskonScalarWhereInput[]
-    NOT?: diskonScalarWhereInput | diskonScalarWhereInput[]
-    id?: IntFilter<"diskon"> | number
-    nama_diskon?: StringFilter<"diskon"> | string
-    persentase?: FloatFilter<"diskon"> | number
-    tanggal_awal?: DateTimeFilter<"diskon"> | Date | string
-    tanggal_akhir?: DateTimeFilter<"diskon"> | Date | string
-    id_stan?: IntFilter<"diskon"> | number
+  export type detail_transaksiCreateManyMenuInputEnvelope = {
+    data: detail_transaksiCreateManyMenuInput | detail_transaksiCreateManyMenuInput[]
+    skipDuplicates?: boolean
   }
 
   export type stanCreateWithoutMenuInput = {
     nama_stan: string
     nama_pemilik: string
     telepon: string
-    user?: usersCreateNestedOneWithoutStanInput
-    transaksi?: transaksiCreateNestedManyWithoutStanInput
     diskon?: diskonCreateNestedManyWithoutStanInput
+    user: usersCreateNestedOneWithoutStanInput
+    transaksi?: transaksiCreateNestedManyWithoutStanInput
   }
 
   export type stanUncheckedCreateWithoutMenuInput = {
@@ -14160,8 +14143,8 @@ export namespace Prisma {
     nama_pemilik: string
     telepon: string
     id_user: number
-    transaksi?: transaksiUncheckedCreateNestedManyWithoutStanInput
     diskon?: diskonUncheckedCreateNestedManyWithoutStanInput
+    transaksi?: transaksiUncheckedCreateNestedManyWithoutStanInput
   }
 
   export type stanCreateOrConnectWithoutMenuInput = {
@@ -14188,29 +14171,32 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type detail_transaksiCreateWithoutMenuInput = {
-    jumlah: number
-    catatan?: string | null
-    harga_total: Decimal | DecimalJsLike | number | string
-    transaksi: transaksiCreateNestedOneWithoutDetail_transaksiInput
-  }
-
-  export type detail_transaksiUncheckedCreateWithoutMenuInput = {
-    id?: number
-    jumlah: number
-    catatan?: string | null
-    harga_total: Decimal | DecimalJsLike | number | string
-    id_transaksi: number
-  }
-
-  export type detail_transaksiCreateOrConnectWithoutMenuInput = {
+  export type detail_transaksiUpsertWithWhereUniqueWithoutMenuInput = {
     where: detail_transaksiWhereUniqueInput
+    update: XOR<detail_transaksiUpdateWithoutMenuInput, detail_transaksiUncheckedUpdateWithoutMenuInput>
     create: XOR<detail_transaksiCreateWithoutMenuInput, detail_transaksiUncheckedCreateWithoutMenuInput>
   }
 
-  export type detail_transaksiCreateManyMenuInputEnvelope = {
-    data: detail_transaksiCreateManyMenuInput | detail_transaksiCreateManyMenuInput[]
-    skipDuplicates?: boolean
+  export type detail_transaksiUpdateWithWhereUniqueWithoutMenuInput = {
+    where: detail_transaksiWhereUniqueInput
+    data: XOR<detail_transaksiUpdateWithoutMenuInput, detail_transaksiUncheckedUpdateWithoutMenuInput>
+  }
+
+  export type detail_transaksiUpdateManyWithWhereWithoutMenuInput = {
+    where: detail_transaksiScalarWhereInput
+    data: XOR<detail_transaksiUpdateManyMutationInput, detail_transaksiUncheckedUpdateManyWithoutMenuInput>
+  }
+
+  export type detail_transaksiScalarWhereInput = {
+    AND?: detail_transaksiScalarWhereInput | detail_transaksiScalarWhereInput[]
+    OR?: detail_transaksiScalarWhereInput[]
+    NOT?: detail_transaksiScalarWhereInput | detail_transaksiScalarWhereInput[]
+    id?: IntFilter<"detail_transaksi"> | number
+    jumlah?: IntFilter<"detail_transaksi"> | number
+    harga_total?: DecimalFilter<"detail_transaksi"> | Decimal | DecimalJsLike | number | string
+    id_transaksi?: IntFilter<"detail_transaksi"> | number
+    id_menu?: IntFilter<"detail_transaksi"> | number
+    catatan?: StringNullableFilter<"detail_transaksi"> | string | null
   }
 
   export type stanUpsertWithoutMenuInput = {
@@ -14228,9 +14214,9 @@ export namespace Prisma {
     nama_stan?: StringFieldUpdateOperationsInput | string
     nama_pemilik?: StringFieldUpdateOperationsInput | string
     telepon?: StringFieldUpdateOperationsInput | string
-    user?: usersUpdateOneWithoutStanNestedInput
-    transaksi?: transaksiUpdateManyWithoutStanNestedInput
     diskon?: diskonUpdateManyWithoutStanNestedInput
+    user?: usersUpdateOneRequiredWithoutStanNestedInput
+    transaksi?: transaksiUpdateManyWithoutStanNestedInput
   }
 
   export type stanUncheckedUpdateWithoutMenuInput = {
@@ -14239,8 +14225,8 @@ export namespace Prisma {
     nama_pemilik?: StringFieldUpdateOperationsInput | string
     telepon?: StringFieldUpdateOperationsInput | string
     id_user?: IntFieldUpdateOperationsInput | number
-    transaksi?: transaksiUncheckedUpdateManyWithoutStanNestedInput
     diskon?: diskonUncheckedUpdateManyWithoutStanNestedInput
+    transaksi?: transaksiUncheckedUpdateManyWithoutStanNestedInput
   }
 
   export type menu_diskonUpsertWithWhereUniqueWithoutMenuInput = {
@@ -14268,40 +14254,12 @@ export namespace Prisma {
     id_diskon?: IntFilter<"menu_diskon"> | number
   }
 
-  export type detail_transaksiUpsertWithWhereUniqueWithoutMenuInput = {
-    where: detail_transaksiWhereUniqueInput
-    update: XOR<detail_transaksiUpdateWithoutMenuInput, detail_transaksiUncheckedUpdateWithoutMenuInput>
-    create: XOR<detail_transaksiCreateWithoutMenuInput, detail_transaksiUncheckedCreateWithoutMenuInput>
-  }
-
-  export type detail_transaksiUpdateWithWhereUniqueWithoutMenuInput = {
-    where: detail_transaksiWhereUniqueInput
-    data: XOR<detail_transaksiUpdateWithoutMenuInput, detail_transaksiUncheckedUpdateWithoutMenuInput>
-  }
-
-  export type detail_transaksiUpdateManyWithWhereWithoutMenuInput = {
-    where: detail_transaksiScalarWhereInput
-    data: XOR<detail_transaksiUpdateManyMutationInput, detail_transaksiUncheckedUpdateManyWithoutMenuInput>
-  }
-
-  export type detail_transaksiScalarWhereInput = {
-    AND?: detail_transaksiScalarWhereInput | detail_transaksiScalarWhereInput[]
-    OR?: detail_transaksiScalarWhereInput[]
-    NOT?: detail_transaksiScalarWhereInput | detail_transaksiScalarWhereInput[]
-    id?: IntFilter<"detail_transaksi"> | number
-    jumlah?: IntFilter<"detail_transaksi"> | number
-    catatan?: StringNullableFilter<"detail_transaksi"> | string | null
-    harga_total?: DecimalFilter<"detail_transaksi"> | Decimal | DecimalJsLike | number | string
-    id_transaksi?: IntFilter<"detail_transaksi"> | number
-    id_menu?: IntFilter<"detail_transaksi"> | number
-  }
-
   export type stanCreateWithoutDiskonInput = {
     nama_stan: string
     nama_pemilik: string
     telepon: string
-    user?: usersCreateNestedOneWithoutStanInput
     menu?: menuCreateNestedManyWithoutStanInput
+    user: usersCreateNestedOneWithoutStanInput
     transaksi?: transaksiCreateNestedManyWithoutStanInput
   }
 
@@ -14354,8 +14312,8 @@ export namespace Prisma {
     nama_stan?: StringFieldUpdateOperationsInput | string
     nama_pemilik?: StringFieldUpdateOperationsInput | string
     telepon?: StringFieldUpdateOperationsInput | string
-    user?: usersUpdateOneWithoutStanNestedInput
     menu?: menuUpdateManyWithoutStanNestedInput
+    user?: usersUpdateOneRequiredWithoutStanNestedInput
     transaksi?: transaksiUpdateManyWithoutStanNestedInput
   }
 
@@ -14385,32 +14343,6 @@ export namespace Prisma {
     data: XOR<menu_diskonUpdateManyMutationInput, menu_diskonUncheckedUpdateManyWithoutDiskonInput>
   }
 
-  export type menuCreateWithoutMenu_diskonInput = {
-    nama_menu: string
-    harga: Decimal | DecimalJsLike | number | string
-    jenis: $Enums.jenis
-    foto: string
-    deskripsi: string
-    stan: stanCreateNestedOneWithoutMenuInput
-    detail_transaksi?: detail_transaksiCreateNestedManyWithoutMenuInput
-  }
-
-  export type menuUncheckedCreateWithoutMenu_diskonInput = {
-    id?: number
-    nama_menu: string
-    harga: Decimal | DecimalJsLike | number | string
-    jenis: $Enums.jenis
-    foto: string
-    deskripsi: string
-    id_stan: number
-    detail_transaksi?: detail_transaksiUncheckedCreateNestedManyWithoutMenuInput
-  }
-
-  export type menuCreateOrConnectWithoutMenu_diskonInput = {
-    where: menuWhereUniqueInput
-    create: XOR<menuCreateWithoutMenu_diskonInput, menuUncheckedCreateWithoutMenu_diskonInput>
-  }
-
   export type diskonCreateWithoutMenu_diskonInput = {
     nama_diskon: string
     persentase: number
@@ -14433,36 +14365,30 @@ export namespace Prisma {
     create: XOR<diskonCreateWithoutMenu_diskonInput, diskonUncheckedCreateWithoutMenu_diskonInput>
   }
 
-  export type menuUpsertWithoutMenu_diskonInput = {
-    update: XOR<menuUpdateWithoutMenu_diskonInput, menuUncheckedUpdateWithoutMenu_diskonInput>
+  export type menuCreateWithoutMenu_diskonInput = {
+    nama_menu: string
+    harga: Decimal | DecimalJsLike | number | string
+    jenis: $Enums.jenis
+    foto: string
+    deskripsi: string
+    detail_transaksi?: detail_transaksiCreateNestedManyWithoutMenuInput
+    stan: stanCreateNestedOneWithoutMenuInput
+  }
+
+  export type menuUncheckedCreateWithoutMenu_diskonInput = {
+    id?: number
+    nama_menu: string
+    harga: Decimal | DecimalJsLike | number | string
+    jenis: $Enums.jenis
+    foto: string
+    deskripsi: string
+    id_stan: number
+    detail_transaksi?: detail_transaksiUncheckedCreateNestedManyWithoutMenuInput
+  }
+
+  export type menuCreateOrConnectWithoutMenu_diskonInput = {
+    where: menuWhereUniqueInput
     create: XOR<menuCreateWithoutMenu_diskonInput, menuUncheckedCreateWithoutMenu_diskonInput>
-    where?: menuWhereInput
-  }
-
-  export type menuUpdateToOneWithWhereWithoutMenu_diskonInput = {
-    where?: menuWhereInput
-    data: XOR<menuUpdateWithoutMenu_diskonInput, menuUncheckedUpdateWithoutMenu_diskonInput>
-  }
-
-  export type menuUpdateWithoutMenu_diskonInput = {
-    nama_menu?: StringFieldUpdateOperationsInput | string
-    harga?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    jenis?: EnumjenisFieldUpdateOperationsInput | $Enums.jenis
-    foto?: StringFieldUpdateOperationsInput | string
-    deskripsi?: StringFieldUpdateOperationsInput | string
-    stan?: stanUpdateOneRequiredWithoutMenuNestedInput
-    detail_transaksi?: detail_transaksiUpdateManyWithoutMenuNestedInput
-  }
-
-  export type menuUncheckedUpdateWithoutMenu_diskonInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    nama_menu?: StringFieldUpdateOperationsInput | string
-    harga?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    jenis?: EnumjenisFieldUpdateOperationsInput | $Enums.jenis
-    foto?: StringFieldUpdateOperationsInput | string
-    deskripsi?: StringFieldUpdateOperationsInput | string
-    id_stan?: IntFieldUpdateOperationsInput | number
-    detail_transaksi?: detail_transaksiUncheckedUpdateManyWithoutMenuNestedInput
   }
 
   export type diskonUpsertWithoutMenu_diskonInput = {
@@ -14493,28 +14419,61 @@ export namespace Prisma {
     id_stan?: IntFieldUpdateOperationsInput | number
   }
 
-  export type stanCreateWithoutTransaksiInput = {
-    nama_stan: string
-    nama_pemilik: string
-    telepon: string
-    user?: usersCreateNestedOneWithoutStanInput
-    menu?: menuCreateNestedManyWithoutStanInput
-    diskon?: diskonCreateNestedManyWithoutStanInput
+  export type menuUpsertWithoutMenu_diskonInput = {
+    update: XOR<menuUpdateWithoutMenu_diskonInput, menuUncheckedUpdateWithoutMenu_diskonInput>
+    create: XOR<menuCreateWithoutMenu_diskonInput, menuUncheckedCreateWithoutMenu_diskonInput>
+    where?: menuWhereInput
   }
 
-  export type stanUncheckedCreateWithoutTransaksiInput = {
+  export type menuUpdateToOneWithWhereWithoutMenu_diskonInput = {
+    where?: menuWhereInput
+    data: XOR<menuUpdateWithoutMenu_diskonInput, menuUncheckedUpdateWithoutMenu_diskonInput>
+  }
+
+  export type menuUpdateWithoutMenu_diskonInput = {
+    nama_menu?: StringFieldUpdateOperationsInput | string
+    harga?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    jenis?: EnumjenisFieldUpdateOperationsInput | $Enums.jenis
+    foto?: StringFieldUpdateOperationsInput | string
+    deskripsi?: StringFieldUpdateOperationsInput | string
+    detail_transaksi?: detail_transaksiUpdateManyWithoutMenuNestedInput
+    stan?: stanUpdateOneRequiredWithoutMenuNestedInput
+  }
+
+  export type menuUncheckedUpdateWithoutMenu_diskonInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nama_menu?: StringFieldUpdateOperationsInput | string
+    harga?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    jenis?: EnumjenisFieldUpdateOperationsInput | $Enums.jenis
+    foto?: StringFieldUpdateOperationsInput | string
+    deskripsi?: StringFieldUpdateOperationsInput | string
+    id_stan?: IntFieldUpdateOperationsInput | number
+    detail_transaksi?: detail_transaksiUncheckedUpdateManyWithoutMenuNestedInput
+  }
+
+  export type detail_transaksiCreateWithoutTransaksiInput = {
+    jumlah: number
+    harga_total: Decimal | DecimalJsLike | number | string
+    catatan?: string | null
+    menu: menuCreateNestedOneWithoutDetail_transaksiInput
+  }
+
+  export type detail_transaksiUncheckedCreateWithoutTransaksiInput = {
     id?: number
-    nama_stan: string
-    nama_pemilik: string
-    telepon: string
-    id_user: number
-    menu?: menuUncheckedCreateNestedManyWithoutStanInput
-    diskon?: diskonUncheckedCreateNestedManyWithoutStanInput
+    jumlah: number
+    harga_total: Decimal | DecimalJsLike | number | string
+    id_menu: number
+    catatan?: string | null
   }
 
-  export type stanCreateOrConnectWithoutTransaksiInput = {
-    where: stanWhereUniqueInput
-    create: XOR<stanCreateWithoutTransaksiInput, stanUncheckedCreateWithoutTransaksiInput>
+  export type detail_transaksiCreateOrConnectWithoutTransaksiInput = {
+    where: detail_transaksiWhereUniqueInput
+    create: XOR<detail_transaksiCreateWithoutTransaksiInput, detail_transaksiUncheckedCreateWithoutTransaksiInput>
+  }
+
+  export type detail_transaksiCreateManyTransaksiInputEnvelope = {
+    data: detail_transaksiCreateManyTransaksiInput | detail_transaksiCreateManyTransaksiInput[]
+    skipDuplicates?: boolean
   }
 
   export type siswaCreateWithoutTransaksiInput = {
@@ -14523,7 +14482,7 @@ export namespace Prisma {
     alamat: string
     telepon: string
     foto: string
-    user?: usersCreateNestedOneWithoutSiswaInput
+    user: usersCreateNestedOneWithoutSiswaInput
   }
 
   export type siswaUncheckedCreateWithoutTransaksiInput = {
@@ -14541,59 +14500,44 @@ export namespace Prisma {
     create: XOR<siswaCreateWithoutTransaksiInput, siswaUncheckedCreateWithoutTransaksiInput>
   }
 
-  export type detail_transaksiCreateWithoutTransaksiInput = {
-    jumlah: number
-    catatan?: string | null
-    harga_total: Decimal | DecimalJsLike | number | string
-    menu: menuCreateNestedOneWithoutDetail_transaksiInput
+  export type stanCreateWithoutTransaksiInput = {
+    nama_stan: string
+    nama_pemilik: string
+    telepon: string
+    diskon?: diskonCreateNestedManyWithoutStanInput
+    menu?: menuCreateNestedManyWithoutStanInput
+    user: usersCreateNestedOneWithoutStanInput
   }
 
-  export type detail_transaksiUncheckedCreateWithoutTransaksiInput = {
+  export type stanUncheckedCreateWithoutTransaksiInput = {
     id?: number
-    jumlah: number
-    catatan?: string | null
-    harga_total: Decimal | DecimalJsLike | number | string
-    id_menu: number
+    nama_stan: string
+    nama_pemilik: string
+    telepon: string
+    id_user: number
+    diskon?: diskonUncheckedCreateNestedManyWithoutStanInput
+    menu?: menuUncheckedCreateNestedManyWithoutStanInput
   }
 
-  export type detail_transaksiCreateOrConnectWithoutTransaksiInput = {
+  export type stanCreateOrConnectWithoutTransaksiInput = {
+    where: stanWhereUniqueInput
+    create: XOR<stanCreateWithoutTransaksiInput, stanUncheckedCreateWithoutTransaksiInput>
+  }
+
+  export type detail_transaksiUpsertWithWhereUniqueWithoutTransaksiInput = {
     where: detail_transaksiWhereUniqueInput
+    update: XOR<detail_transaksiUpdateWithoutTransaksiInput, detail_transaksiUncheckedUpdateWithoutTransaksiInput>
     create: XOR<detail_transaksiCreateWithoutTransaksiInput, detail_transaksiUncheckedCreateWithoutTransaksiInput>
   }
 
-  export type detail_transaksiCreateManyTransaksiInputEnvelope = {
-    data: detail_transaksiCreateManyTransaksiInput | detail_transaksiCreateManyTransaksiInput[]
-    skipDuplicates?: boolean
+  export type detail_transaksiUpdateWithWhereUniqueWithoutTransaksiInput = {
+    where: detail_transaksiWhereUniqueInput
+    data: XOR<detail_transaksiUpdateWithoutTransaksiInput, detail_transaksiUncheckedUpdateWithoutTransaksiInput>
   }
 
-  export type stanUpsertWithoutTransaksiInput = {
-    update: XOR<stanUpdateWithoutTransaksiInput, stanUncheckedUpdateWithoutTransaksiInput>
-    create: XOR<stanCreateWithoutTransaksiInput, stanUncheckedCreateWithoutTransaksiInput>
-    where?: stanWhereInput
-  }
-
-  export type stanUpdateToOneWithWhereWithoutTransaksiInput = {
-    where?: stanWhereInput
-    data: XOR<stanUpdateWithoutTransaksiInput, stanUncheckedUpdateWithoutTransaksiInput>
-  }
-
-  export type stanUpdateWithoutTransaksiInput = {
-    nama_stan?: StringFieldUpdateOperationsInput | string
-    nama_pemilik?: StringFieldUpdateOperationsInput | string
-    telepon?: StringFieldUpdateOperationsInput | string
-    user?: usersUpdateOneWithoutStanNestedInput
-    menu?: menuUpdateManyWithoutStanNestedInput
-    diskon?: diskonUpdateManyWithoutStanNestedInput
-  }
-
-  export type stanUncheckedUpdateWithoutTransaksiInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    nama_stan?: StringFieldUpdateOperationsInput | string
-    nama_pemilik?: StringFieldUpdateOperationsInput | string
-    telepon?: StringFieldUpdateOperationsInput | string
-    id_user?: IntFieldUpdateOperationsInput | number
-    menu?: menuUncheckedUpdateManyWithoutStanNestedInput
-    diskon?: diskonUncheckedUpdateManyWithoutStanNestedInput
+  export type detail_transaksiUpdateManyWithWhereWithoutTransaksiInput = {
+    where: detail_transaksiScalarWhereInput
+    data: XOR<detail_transaksiUpdateManyMutationInput, detail_transaksiUncheckedUpdateManyWithoutTransaksiInput>
   }
 
   export type siswaUpsertWithoutTransaksiInput = {
@@ -14613,7 +14557,7 @@ export namespace Prisma {
     alamat?: StringFieldUpdateOperationsInput | string
     telepon?: StringFieldUpdateOperationsInput | string
     foto?: StringFieldUpdateOperationsInput | string
-    user?: usersUpdateOneWithoutSiswaNestedInput
+    user?: usersUpdateOneRequiredWithoutSiswaNestedInput
   }
 
   export type siswaUncheckedUpdateWithoutTransaksiInput = {
@@ -14626,42 +14570,34 @@ export namespace Prisma {
     id_user?: IntFieldUpdateOperationsInput | number
   }
 
-  export type detail_transaksiUpsertWithWhereUniqueWithoutTransaksiInput = {
-    where: detail_transaksiWhereUniqueInput
-    update: XOR<detail_transaksiUpdateWithoutTransaksiInput, detail_transaksiUncheckedUpdateWithoutTransaksiInput>
-    create: XOR<detail_transaksiCreateWithoutTransaksiInput, detail_transaksiUncheckedCreateWithoutTransaksiInput>
+  export type stanUpsertWithoutTransaksiInput = {
+    update: XOR<stanUpdateWithoutTransaksiInput, stanUncheckedUpdateWithoutTransaksiInput>
+    create: XOR<stanCreateWithoutTransaksiInput, stanUncheckedCreateWithoutTransaksiInput>
+    where?: stanWhereInput
   }
 
-  export type detail_transaksiUpdateWithWhereUniqueWithoutTransaksiInput = {
-    where: detail_transaksiWhereUniqueInput
-    data: XOR<detail_transaksiUpdateWithoutTransaksiInput, detail_transaksiUncheckedUpdateWithoutTransaksiInput>
+  export type stanUpdateToOneWithWhereWithoutTransaksiInput = {
+    where?: stanWhereInput
+    data: XOR<stanUpdateWithoutTransaksiInput, stanUncheckedUpdateWithoutTransaksiInput>
   }
 
-  export type detail_transaksiUpdateManyWithWhereWithoutTransaksiInput = {
-    where: detail_transaksiScalarWhereInput
-    data: XOR<detail_transaksiUpdateManyMutationInput, detail_transaksiUncheckedUpdateManyWithoutTransaksiInput>
+  export type stanUpdateWithoutTransaksiInput = {
+    nama_stan?: StringFieldUpdateOperationsInput | string
+    nama_pemilik?: StringFieldUpdateOperationsInput | string
+    telepon?: StringFieldUpdateOperationsInput | string
+    diskon?: diskonUpdateManyWithoutStanNestedInput
+    menu?: menuUpdateManyWithoutStanNestedInput
+    user?: usersUpdateOneRequiredWithoutStanNestedInput
   }
 
-  export type transaksiCreateWithoutDetail_transaksiInput = {
-    uuid: string
-    tanggal?: Date | string
-    status?: $Enums.status
-    stan: stanCreateNestedOneWithoutTransaksiInput
-    siswa: siswaCreateNestedOneWithoutTransaksiInput
-  }
-
-  export type transaksiUncheckedCreateWithoutDetail_transaksiInput = {
-    id?: number
-    uuid: string
-    tanggal?: Date | string
-    status?: $Enums.status
-    id_stan: number
-    id_siswa: number
-  }
-
-  export type transaksiCreateOrConnectWithoutDetail_transaksiInput = {
-    where: transaksiWhereUniqueInput
-    create: XOR<transaksiCreateWithoutDetail_transaksiInput, transaksiUncheckedCreateWithoutDetail_transaksiInput>
+  export type stanUncheckedUpdateWithoutTransaksiInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nama_stan?: StringFieldUpdateOperationsInput | string
+    nama_pemilik?: StringFieldUpdateOperationsInput | string
+    telepon?: StringFieldUpdateOperationsInput | string
+    id_user?: IntFieldUpdateOperationsInput | number
+    diskon?: diskonUncheckedUpdateManyWithoutStanNestedInput
+    menu?: menuUncheckedUpdateManyWithoutStanNestedInput
   }
 
   export type menuCreateWithoutDetail_transaksiInput = {
@@ -14690,32 +14626,26 @@ export namespace Prisma {
     create: XOR<menuCreateWithoutDetail_transaksiInput, menuUncheckedCreateWithoutDetail_transaksiInput>
   }
 
-  export type transaksiUpsertWithoutDetail_transaksiInput = {
-    update: XOR<transaksiUpdateWithoutDetail_transaksiInput, transaksiUncheckedUpdateWithoutDetail_transaksiInput>
+  export type transaksiCreateWithoutDetail_transaksiInput = {
+    tanggal?: Date | string
+    uuid: string
+    status?: $Enums.status
+    siswa: siswaCreateNestedOneWithoutTransaksiInput
+    stan: stanCreateNestedOneWithoutTransaksiInput
+  }
+
+  export type transaksiUncheckedCreateWithoutDetail_transaksiInput = {
+    id?: number
+    tanggal?: Date | string
+    id_stan: number
+    id_siswa: number
+    uuid: string
+    status?: $Enums.status
+  }
+
+  export type transaksiCreateOrConnectWithoutDetail_transaksiInput = {
+    where: transaksiWhereUniqueInput
     create: XOR<transaksiCreateWithoutDetail_transaksiInput, transaksiUncheckedCreateWithoutDetail_transaksiInput>
-    where?: transaksiWhereInput
-  }
-
-  export type transaksiUpdateToOneWithWhereWithoutDetail_transaksiInput = {
-    where?: transaksiWhereInput
-    data: XOR<transaksiUpdateWithoutDetail_transaksiInput, transaksiUncheckedUpdateWithoutDetail_transaksiInput>
-  }
-
-  export type transaksiUpdateWithoutDetail_transaksiInput = {
-    uuid?: StringFieldUpdateOperationsInput | string
-    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
-    stan?: stanUpdateOneRequiredWithoutTransaksiNestedInput
-    siswa?: siswaUpdateOneRequiredWithoutTransaksiNestedInput
-  }
-
-  export type transaksiUncheckedUpdateWithoutDetail_transaksiInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    uuid?: StringFieldUpdateOperationsInput | string
-    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
-    id_stan?: IntFieldUpdateOperationsInput | number
-    id_siswa?: IntFieldUpdateOperationsInput | number
   }
 
   export type menuUpsertWithoutDetail_transaksiInput = {
@@ -14748,6 +14678,34 @@ export namespace Prisma {
     deskripsi?: StringFieldUpdateOperationsInput | string
     id_stan?: IntFieldUpdateOperationsInput | number
     menu_diskon?: menu_diskonUncheckedUpdateManyWithoutMenuNestedInput
+  }
+
+  export type transaksiUpsertWithoutDetail_transaksiInput = {
+    update: XOR<transaksiUpdateWithoutDetail_transaksiInput, transaksiUncheckedUpdateWithoutDetail_transaksiInput>
+    create: XOR<transaksiCreateWithoutDetail_transaksiInput, transaksiUncheckedCreateWithoutDetail_transaksiInput>
+    where?: transaksiWhereInput
+  }
+
+  export type transaksiUpdateToOneWithWhereWithoutDetail_transaksiInput = {
+    where?: transaksiWhereInput
+    data: XOR<transaksiUpdateWithoutDetail_transaksiInput, transaksiUncheckedUpdateWithoutDetail_transaksiInput>
+  }
+
+  export type transaksiUpdateWithoutDetail_transaksiInput = {
+    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
+    uuid?: StringFieldUpdateOperationsInput | string
+    status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
+    siswa?: siswaUpdateOneRequiredWithoutTransaksiNestedInput
+    stan?: stanUpdateOneRequiredWithoutTransaksiNestedInput
+  }
+
+  export type transaksiUncheckedUpdateWithoutDetail_transaksiInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
+    id_stan?: IntFieldUpdateOperationsInput | number
+    id_siswa?: IntFieldUpdateOperationsInput | number
+    uuid?: StringFieldUpdateOperationsInput | string
+    status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
   }
 
   export type siswaCreateManyUserInput = {
@@ -14798,9 +14756,9 @@ export namespace Prisma {
     nama_stan?: StringFieldUpdateOperationsInput | string
     nama_pemilik?: StringFieldUpdateOperationsInput | string
     telepon?: StringFieldUpdateOperationsInput | string
+    diskon?: diskonUpdateManyWithoutStanNestedInput
     menu?: menuUpdateManyWithoutStanNestedInput
     transaksi?: transaksiUpdateManyWithoutStanNestedInput
-    diskon?: diskonUpdateManyWithoutStanNestedInput
   }
 
   export type stanUncheckedUpdateWithoutUserInput = {
@@ -14808,9 +14766,9 @@ export namespace Prisma {
     nama_stan?: StringFieldUpdateOperationsInput | string
     nama_pemilik?: StringFieldUpdateOperationsInput | string
     telepon?: StringFieldUpdateOperationsInput | string
+    diskon?: diskonUncheckedUpdateManyWithoutStanNestedInput
     menu?: menuUncheckedUpdateManyWithoutStanNestedInput
     transaksi?: transaksiUncheckedUpdateManyWithoutStanNestedInput
-    diskon?: diskonUncheckedUpdateManyWithoutStanNestedInput
   }
 
   export type stanUncheckedUpdateManyWithoutUserInput = {
@@ -14822,35 +14780,43 @@ export namespace Prisma {
 
   export type transaksiCreateManySiswaInput = {
     id?: number
-    uuid: string
     tanggal?: Date | string
-    status?: $Enums.status
     id_stan: number
+    uuid: string
+    status?: $Enums.status
   }
 
   export type transaksiUpdateWithoutSiswaInput = {
-    uuid?: StringFieldUpdateOperationsInput | string
     tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
+    uuid?: StringFieldUpdateOperationsInput | string
     status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
-    stan?: stanUpdateOneRequiredWithoutTransaksiNestedInput
     detail_transaksi?: detail_transaksiUpdateManyWithoutTransaksiNestedInput
+    stan?: stanUpdateOneRequiredWithoutTransaksiNestedInput
   }
 
   export type transaksiUncheckedUpdateWithoutSiswaInput = {
     id?: IntFieldUpdateOperationsInput | number
-    uuid?: StringFieldUpdateOperationsInput | string
     tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
     id_stan?: IntFieldUpdateOperationsInput | number
+    uuid?: StringFieldUpdateOperationsInput | string
+    status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
     detail_transaksi?: detail_transaksiUncheckedUpdateManyWithoutTransaksiNestedInput
   }
 
   export type transaksiUncheckedUpdateManyWithoutSiswaInput = {
     id?: IntFieldUpdateOperationsInput | number
-    uuid?: StringFieldUpdateOperationsInput | string
     tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
     id_stan?: IntFieldUpdateOperationsInput | number
+    uuid?: StringFieldUpdateOperationsInput | string
+    status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
+  }
+
+  export type diskonCreateManyStanInput = {
+    id?: number
+    nama_diskon: string
+    persentase: number
+    tanggal_awal: Date | string
+    tanggal_akhir: Date | string
   }
 
   export type menuCreateManyStanInput = {
@@ -14864,73 +14830,10 @@ export namespace Prisma {
 
   export type transaksiCreateManyStanInput = {
     id?: number
-    uuid: string
     tanggal?: Date | string
-    status?: $Enums.status
     id_siswa: number
-  }
-
-  export type diskonCreateManyStanInput = {
-    id?: number
-    nama_diskon: string
-    persentase: number
-    tanggal_awal: Date | string
-    tanggal_akhir: Date | string
-  }
-
-  export type menuUpdateWithoutStanInput = {
-    nama_menu?: StringFieldUpdateOperationsInput | string
-    harga?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    jenis?: EnumjenisFieldUpdateOperationsInput | $Enums.jenis
-    foto?: StringFieldUpdateOperationsInput | string
-    deskripsi?: StringFieldUpdateOperationsInput | string
-    menu_diskon?: menu_diskonUpdateManyWithoutMenuNestedInput
-    detail_transaksi?: detail_transaksiUpdateManyWithoutMenuNestedInput
-  }
-
-  export type menuUncheckedUpdateWithoutStanInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    nama_menu?: StringFieldUpdateOperationsInput | string
-    harga?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    jenis?: EnumjenisFieldUpdateOperationsInput | $Enums.jenis
-    foto?: StringFieldUpdateOperationsInput | string
-    deskripsi?: StringFieldUpdateOperationsInput | string
-    menu_diskon?: menu_diskonUncheckedUpdateManyWithoutMenuNestedInput
-    detail_transaksi?: detail_transaksiUncheckedUpdateManyWithoutMenuNestedInput
-  }
-
-  export type menuUncheckedUpdateManyWithoutStanInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    nama_menu?: StringFieldUpdateOperationsInput | string
-    harga?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    jenis?: EnumjenisFieldUpdateOperationsInput | $Enums.jenis
-    foto?: StringFieldUpdateOperationsInput | string
-    deskripsi?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type transaksiUpdateWithoutStanInput = {
-    uuid?: StringFieldUpdateOperationsInput | string
-    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
-    siswa?: siswaUpdateOneRequiredWithoutTransaksiNestedInput
-    detail_transaksi?: detail_transaksiUpdateManyWithoutTransaksiNestedInput
-  }
-
-  export type transaksiUncheckedUpdateWithoutStanInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    uuid?: StringFieldUpdateOperationsInput | string
-    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
-    id_siswa?: IntFieldUpdateOperationsInput | number
-    detail_transaksi?: detail_transaksiUncheckedUpdateManyWithoutTransaksiNestedInput
-  }
-
-  export type transaksiUncheckedUpdateManyWithoutStanInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    uuid?: StringFieldUpdateOperationsInput | string
-    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
-    id_siswa?: IntFieldUpdateOperationsInput | number
+    uuid: string
+    status?: $Enums.status
   }
 
   export type diskonUpdateWithoutStanInput = {
@@ -14958,17 +14861,95 @@ export namespace Prisma {
     tanggal_akhir?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type menu_diskonCreateManyMenuInput = {
-    id?: number
-    id_diskon: number
+  export type menuUpdateWithoutStanInput = {
+    nama_menu?: StringFieldUpdateOperationsInput | string
+    harga?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    jenis?: EnumjenisFieldUpdateOperationsInput | $Enums.jenis
+    foto?: StringFieldUpdateOperationsInput | string
+    deskripsi?: StringFieldUpdateOperationsInput | string
+    detail_transaksi?: detail_transaksiUpdateManyWithoutMenuNestedInput
+    menu_diskon?: menu_diskonUpdateManyWithoutMenuNestedInput
+  }
+
+  export type menuUncheckedUpdateWithoutStanInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nama_menu?: StringFieldUpdateOperationsInput | string
+    harga?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    jenis?: EnumjenisFieldUpdateOperationsInput | $Enums.jenis
+    foto?: StringFieldUpdateOperationsInput | string
+    deskripsi?: StringFieldUpdateOperationsInput | string
+    detail_transaksi?: detail_transaksiUncheckedUpdateManyWithoutMenuNestedInput
+    menu_diskon?: menu_diskonUncheckedUpdateManyWithoutMenuNestedInput
+  }
+
+  export type menuUncheckedUpdateManyWithoutStanInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nama_menu?: StringFieldUpdateOperationsInput | string
+    harga?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    jenis?: EnumjenisFieldUpdateOperationsInput | $Enums.jenis
+    foto?: StringFieldUpdateOperationsInput | string
+    deskripsi?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type transaksiUpdateWithoutStanInput = {
+    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
+    uuid?: StringFieldUpdateOperationsInput | string
+    status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
+    detail_transaksi?: detail_transaksiUpdateManyWithoutTransaksiNestedInput
+    siswa?: siswaUpdateOneRequiredWithoutTransaksiNestedInput
+  }
+
+  export type transaksiUncheckedUpdateWithoutStanInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
+    id_siswa?: IntFieldUpdateOperationsInput | number
+    uuid?: StringFieldUpdateOperationsInput | string
+    status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
+    detail_transaksi?: detail_transaksiUncheckedUpdateManyWithoutTransaksiNestedInput
+  }
+
+  export type transaksiUncheckedUpdateManyWithoutStanInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
+    id_siswa?: IntFieldUpdateOperationsInput | number
+    uuid?: StringFieldUpdateOperationsInput | string
+    status?: EnumstatusFieldUpdateOperationsInput | $Enums.status
   }
 
   export type detail_transaksiCreateManyMenuInput = {
     id?: number
     jumlah: number
-    catatan?: string | null
     harga_total: Decimal | DecimalJsLike | number | string
     id_transaksi: number
+    catatan?: string | null
+  }
+
+  export type menu_diskonCreateManyMenuInput = {
+    id?: number
+    id_diskon: number
+  }
+
+  export type detail_transaksiUpdateWithoutMenuInput = {
+    jumlah?: IntFieldUpdateOperationsInput | number
+    harga_total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    transaksi?: transaksiUpdateOneRequiredWithoutDetail_transaksiNestedInput
+  }
+
+  export type detail_transaksiUncheckedUpdateWithoutMenuInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    jumlah?: IntFieldUpdateOperationsInput | number
+    harga_total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    id_transaksi?: IntFieldUpdateOperationsInput | number
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type detail_transaksiUncheckedUpdateManyWithoutMenuInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    jumlah?: IntFieldUpdateOperationsInput | number
+    harga_total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    id_transaksi?: IntFieldUpdateOperationsInput | number
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type menu_diskonUpdateWithoutMenuInput = {
@@ -14983,29 +14964,6 @@ export namespace Prisma {
   export type menu_diskonUncheckedUpdateManyWithoutMenuInput = {
     id?: IntFieldUpdateOperationsInput | number
     id_diskon?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type detail_transaksiUpdateWithoutMenuInput = {
-    jumlah?: IntFieldUpdateOperationsInput | number
-    catatan?: NullableStringFieldUpdateOperationsInput | string | null
-    harga_total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    transaksi?: transaksiUpdateOneRequiredWithoutDetail_transaksiNestedInput
-  }
-
-  export type detail_transaksiUncheckedUpdateWithoutMenuInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    jumlah?: IntFieldUpdateOperationsInput | number
-    catatan?: NullableStringFieldUpdateOperationsInput | string | null
-    harga_total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    id_transaksi?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type detail_transaksiUncheckedUpdateManyWithoutMenuInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    jumlah?: IntFieldUpdateOperationsInput | number
-    catatan?: NullableStringFieldUpdateOperationsInput | string | null
-    harga_total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    id_transaksi?: IntFieldUpdateOperationsInput | number
   }
 
   export type menu_diskonCreateManyDiskonInput = {
@@ -15030,32 +14988,32 @@ export namespace Prisma {
   export type detail_transaksiCreateManyTransaksiInput = {
     id?: number
     jumlah: number
-    catatan?: string | null
     harga_total: Decimal | DecimalJsLike | number | string
     id_menu: number
+    catatan?: string | null
   }
 
   export type detail_transaksiUpdateWithoutTransaksiInput = {
     jumlah?: IntFieldUpdateOperationsInput | number
-    catatan?: NullableStringFieldUpdateOperationsInput | string | null
     harga_total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
     menu?: menuUpdateOneRequiredWithoutDetail_transaksiNestedInput
   }
 
   export type detail_transaksiUncheckedUpdateWithoutTransaksiInput = {
     id?: IntFieldUpdateOperationsInput | number
     jumlah?: IntFieldUpdateOperationsInput | number
-    catatan?: NullableStringFieldUpdateOperationsInput | string | null
     harga_total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     id_menu?: IntFieldUpdateOperationsInput | number
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type detail_transaksiUncheckedUpdateManyWithoutTransaksiInput = {
     id?: IntFieldUpdateOperationsInput | number
     jumlah?: IntFieldUpdateOperationsInput | number
-    catatan?: NullableStringFieldUpdateOperationsInput | string | null
     harga_total?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     id_menu?: IntFieldUpdateOperationsInput | number
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 
