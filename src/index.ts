@@ -1,8 +1,6 @@
 import express from "express";
 import cors from "cors";
 
-import { PORT } from "./global";
-
 import menuRouter from "./Routers/menuRouter";
 import userRouter from "./Routers/userRouter";
 import diskonRouter from "./Routers/diskonRouter";
