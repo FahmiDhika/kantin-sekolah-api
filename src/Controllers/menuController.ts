@@ -1,4 +1,4 @@
-import { jenis, PrismaClient } from "../../generated/prisma/client";
+import { jenis, PrismaClient } from "../generated/prisma/client";
 import { Request, Response } from "express";
 import fs from "fs";
 import { BASE_URL } from "../global";

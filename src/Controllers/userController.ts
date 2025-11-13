@@ -1,4 +1,4 @@
-import { PrismaClient } from "../../generated/prisma/client";
+import { PrismaClient } from "../generated/prisma/client";
 import { Request, Response } from "express";
 import md5 from "md5";
 import { v4 as uuidv4 } from "uuid";

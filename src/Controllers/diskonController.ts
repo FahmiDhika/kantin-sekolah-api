@@ -1,4 +1,4 @@
-import { PrismaClient } from "../../generated/prisma/client";
+import { PrismaClient } from "../generated/prisma/client";
 import { Request, Response } from "express";
 import dayjs from "dayjs";
 
