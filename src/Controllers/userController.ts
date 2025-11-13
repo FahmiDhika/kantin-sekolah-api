@@ -21,12 +21,14 @@ export const getUser = async (req: Request, res: Response) => {
       message: `User berhasil ditampilkan.`,
       data: user,
     });
+    return;
   } catch (error) {
     console.log(error);
     res.status(400).json({
       status: error,
       message: `Terjadi sebuah kesalahan : ${error}.`,
     });
+    return;
   }
 };
 
@@ -44,6 +46,7 @@ export const authentication = async (req: Request, res: Response) => {
         logged: false,
         message: `Username atau Password invalid!`,
       });
+      return;
     }
 
     let data = {
@@ -65,12 +68,14 @@ export const authentication = async (req: Request, res: Response) => {
       token,
       data,
     });
+    return;
   } catch (error) {
     console.log(error);
     res.status(400).json({
       status: error,
       message: `Terjadi sebuah kesalahan : ${error}.`,
     });
+    return;
   }
 };
 
@@ -88,6 +93,7 @@ export const updateUser = async (req: Request, res: Response) => {
         status: false,
         message: `User tidak ditemukan.`,
       });
+      return;
     }
 
     const updateUser = await prisma.users.update({
@@ -103,12 +109,14 @@ export const updateUser = async (req: Request, res: Response) => {
       message: `Data user berhasil di update.`,
       data: updateUser,
     });
+    return;
   } catch (error) {
     console.log(error);
     res.status(400).json({
       status: error,
       message: `Terjadi sebuah kesalahan : ${error}.`,
     });
+    return;
   }
 };
 
@@ -129,12 +137,14 @@ export const register = async (req: Request, res: Response) => {
       message: `User berhasil dibuat.`,
       data: register,
     });
+    return;
   } catch (error) {
     console.log(error);
     res.status(400).json({
       status: error,
       message: `Terjadi sebuah kesalahan : ${error}.`,
     });
+    return;
   }
 };
 
@@ -151,6 +161,7 @@ export const deleteUser = async (req: Request, res: Response) => {
         status: false,
         message: `User tidak ditemukan.`,
       });
+      return;
     }
 
     const deleteUser = await prisma.users.delete({
@@ -162,12 +173,14 @@ export const deleteUser = async (req: Request, res: Response) => {
       message: `User berhasil dihapus`,
       data: deleteUser,
     });
+    return;
   } catch (error) {
     console.log(error);
     res.status(400).json({
       status: error,
       message: `Terjadi sebuah kesalahan : ${error}.`,
     });
+    return;
   }
 };
 
@@ -200,12 +213,14 @@ export const dataSiswa = async (req: Request, res: Response) => {
       message: `Terima kasih telah mendaftar.`,
       data,
     });
+    return;
   } catch (error) {
     console.log(error);
     res.status(400).json({
       status: error,
       message: `Terjadi sebuah kesalahan : ${error}.`,
     });
+    return;
   }
 };
 
@@ -223,6 +238,7 @@ export const updateSiswa = async (req: Request, res: Response) => {
         status: false,
         message: `Siswa tidak ditemukan.`,
       });
+      return;
     }
 
     let filename = findSiswa?.foto;
@@ -253,12 +269,14 @@ export const updateSiswa = async (req: Request, res: Response) => {
       message: `Data siswa berhasil di update.`,
       data: updateSiswa,
     });
+    return;
   } catch (error) {
     console.log(error);
     res.status(400).json({
       status: error,
       message: `Terjadi sebuah kesalahan : ${error}.`,
     });
+    return;
   }
 };
 
@@ -282,12 +300,14 @@ export const dataStan = async (req: Request, res: Response) => {
       message: `Terima kasih telah mendaftar.`,
       data,
     });
+    return;
   } catch (error) {
     console.log(error);
     res.status(400).json({
       status: error,
       message: `Terjadi sebuah kesalahan : ${error}.`,
     });
+    return;
   }
 };
 
@@ -305,6 +325,7 @@ export const updateStan = async (req: Request, res: Response) => {
         status: false,
         message: `Stan tidak ditemukan.`,
       });
+      return;
     }
 
     const updateStan = await prisma.stan.update({
@@ -321,11 +342,13 @@ export const updateStan = async (req: Request, res: Response) => {
       message: `Data stan ${findStan?.nama_stan} berhasil diupdate`,
       data: updateStan,
     });
+    return;
   } catch (error) {
     console.log(error);
     res.status(400).json({
       status: error,
       message: `Terjadi sebuah kesalahan : ${error}.`,
     });
+    return;
   }
 };
