@@ -2,6 +2,12 @@ import { jenis, PrismaClient } from "../generated/prisma/client";
 import { Request, Response } from "express";
 import fs from "fs";
 import { BASE_URL } from "../global";
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient(
+  process.env.SUPABASE_URL!,
+  process.env.SUPABASE_KEY!
+);
 
 const prisma = new PrismaClient({ errorFormat: "pretty" });
 
@@ -159,7 +165,26 @@ export const addMenu = async (req: Request, res: Response) => {
 
     let filename = "";
     if (req.file) {
-      filename = req.file.filename;
+      const uniqueName = `menu_${Date.now()}_${req.file.originalname}`;
+
+      const { data, error: uploadError } = await supabase.storage
+        .from("menu")
+        .upload(uniqueName, req.file.buffer, {
+          contentType: req.file.mimetype,
+          upsert: true,
+        });
+
+      if (uploadError) {
+        console.error("Supabase Upload Error:", uploadError);
+        res.status(200).json({
+          status: false,
+          message: "Gagal upload file",
+          error: uploadError,
+        });
+        return;
+      }
+
+      filename = uniqueName;
     }
 
     const addMenu = await prisma.menu.create({
@@ -214,14 +239,22 @@ export const updateMenu = async (req: Request, res: Response) => {
     let filename = findMenu?.foto;
 
     if (req.file) {
-      filename = req.file.filename;
+      const uniqueName = `menu_${Date.now()}_${req.file.originalname}`;
 
-      const path = `${BASE_URL}../upload/menu_picture/${findMenu?.foto}`;
-      let exists = fs.existsSync(path);
+      const { data, error: uploadError } = await supabase.storage
+        .from("menu")
+        .upload(uniqueName, req.file.buffer, {
+          contentType: req.file.mimetype,
+          upsert: true,
+        });
 
-      if (exists && findMenu?.foto !== ``) {
-        fs.unlinkSync(path);
+      if (uploadError) throw uploadError;
+
+      if (findMenu.foto) {
+        await supabase.storage.from("menu").remove([findMenu.foto]);
       }
+
+      filename = uniqueName;
     }
 
     const updateMenu = await prisma.menu.update({

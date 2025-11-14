@@ -16,6 +16,8 @@ exports.deleteMenu = exports.updateMenu = exports.addMenu = exports.getAllMenus 
 const client_1 = require("../generated/prisma/client");
 const fs_1 = __importDefault(require("fs"));
 const global_1 = require("../global");
+const supabase_js_1 = require("@supabase/supabase-js");
+const supabase = (0, supabase_js_1.createClient)(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 const prisma = new client_1.PrismaClient({ errorFormat: "pretty" });
 const getAllMenusForSiswa = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -150,7 +152,23 @@ const addMenu = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         let filename = "";
         if (req.file) {
-            filename = req.file.filename;
+            const uniqueName = `menu_${Date.now()}_${req.file.originalname}`;
+            const { data, error: uploadError } = yield supabase.storage
+                .from("menu")
+                .upload(uniqueName, req.file.buffer, {
+                contentType: req.file.mimetype,
+                upsert: true,
+            });
+            if (uploadError) {
+                console.error("Supabase Upload Error:", uploadError);
+                res.status(200).json({
+                    status: false,
+                    message: "Gagal upload file",
+                    error: uploadError,
+                });
+                return;
+            }
+            filename = uniqueName;
         }
         const addMenu = yield prisma.menu.create({
             data: {
@@ -199,12 +217,19 @@ const updateMenu = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         }
         let filename = findMenu === null || findMenu === void 0 ? void 0 : findMenu.foto;
         if (req.file) {
-            filename = req.file.filename;
-            const path = `${global_1.BASE_URL}../upload/menu_picture/${findMenu === null || findMenu === void 0 ? void 0 : findMenu.foto}`;
-            let exists = fs_1.default.existsSync(path);
-            if (exists && (findMenu === null || findMenu === void 0 ? void 0 : findMenu.foto) !== ``) {
-                fs_1.default.unlinkSync(path);
+            const uniqueName = `menu_${Date.now()}_${req.file.originalname}`;
+            const { data, error: uploadError } = yield supabase.storage
+                .from("menu")
+                .upload(uniqueName, req.file.buffer, {
+                contentType: req.file.mimetype,
+                upsert: true,
+            });
+            if (uploadError)
+                throw uploadError;
+            if (findMenu.foto) {
+                yield supabase.storage.from("menu").remove([findMenu.foto]);
             }
+            filename = uniqueName;
         }
         const updateMenu = yield prisma.menu.update({
             data: {

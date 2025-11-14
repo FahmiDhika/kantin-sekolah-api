@@ -18,7 +18,8 @@ const md5_1 = __importDefault(require("md5"));
 const uuid_1 = require("uuid");
 const jsonwebtoken_1 = require("jsonwebtoken");
 const global_1 = require("../global");
-const fs_1 = __importDefault(require("fs"));
+const supabase_js_1 = require("@supabase/supabase-js");
+const supabase = (0, supabase_js_1.createClient)(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 const prisma = new client_1.PrismaClient({ errorFormat: "pretty" });
 const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -191,7 +192,23 @@ const dataSiswa = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const uuid = (0, uuid_1.v4)();
         let filename = "";
         if (req.file) {
-            filename = req.file.filename;
+            const uniqueName = `siswa_${Date.now()}_${req.file.originalname}`;
+            const { data, error: uploadError } = yield supabase.storage
+                .from("siswa")
+                .upload(uniqueName, req.file.buffer, {
+                contentType: req.file.mimetype,
+                upsert: true,
+            });
+            if (uploadError) {
+                console.error("Supabase Upload Error:", uploadError);
+                res.status(200).json({
+                    status: false,
+                    message: "Gagal upload foto",
+                    error: uploadError,
+                });
+                return;
+            }
+            filename = uniqueName;
         }
         const data = yield prisma.siswa.create({
             data: {
@@ -234,14 +251,33 @@ const updateSiswa = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             });
             return;
         }
-        let filename = findSiswa === null || findSiswa === void 0 ? void 0 : findSiswa.foto;
+        let filename = findSiswa.foto;
         if (req.file) {
-            filename = req.file.filename;
-            let path = `${global_1.BASE_URL}../upload/user_picture/${findSiswa === null || findSiswa === void 0 ? void 0 : findSiswa.foto}`;
-            let exists = fs_1.default.existsSync(path);
-            if (exists && (findSiswa === null || findSiswa === void 0 ? void 0 : findSiswa.foto) !== ``) {
-                fs_1.default.unlinkSync(path);
+            const uniqueName = `siswa_${Date.now()}_${req.file.originalname}`;
+            // Upload ke Supabase
+            const { data, error: uploadError } = yield supabase.storage
+                .from("siswa")
+                .upload(uniqueName, req.file.buffer, {
+                contentType: req.file.mimetype,
+                upsert: true,
+            });
+            if (uploadError) {
+                console.error("Supabase Upload Error:", uploadError);
+                res.status(200).json({
+                    status: false,
+                    message: "Gagal upload foto",
+                    error: uploadError,
+                });
+                return;
             }
+            if (findSiswa.foto) {
+                const { error: removeError } = yield supabase.storage
+                    .from("siswa")
+                    .remove([findSiswa.foto]);
+                if (removeError)
+                    console.warn("Gagal hapus foto lama:", removeError);
+            }
+            filename = uniqueName;
         }
         const updateSiswa = yield prisma.siswa.update({
             data: {
