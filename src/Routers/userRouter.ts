@@ -62,7 +62,7 @@ app.put(
 );
 
 // end point admin stan
-app.get("/get", getUser);
+app.get("/get", [verifyToken, verifyRole(["ADMIN_STAN"])], getUser);
 app.post(
   "/dataStan/:id",
   [verifyToken, verifyRole(["ADMIN_STAN"]), verifyDataStan],
