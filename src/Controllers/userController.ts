@@ -44,6 +44,10 @@ export const authentication = async (req: Request, res: Response) => {
 
     const findUser = await prisma.users.findFirst({
       where: { username, password: md5(password) },
+      include: {
+        siswa: true,
+        stan: true,
+      },
     });
 
     if (!findUser) {
@@ -55,11 +59,19 @@ export const authentication = async (req: Request, res: Response) => {
       return;
     }
 
+    const nama =
+      findUser.role === "SISWA"
+        ? findUser.siswa[0]?.nama
+        : findUser.role === "ADMIN_STAN"
+        ? findUser.stan[0]?.nama_stan
+        : null;
+
     let data = {
       id: findUser?.id,
       username: findUser?.username,
       password: findUser?.password,
       role: findUser?.role,
+      nama,
     };
 
     let payload = JSON.stringify(data);
