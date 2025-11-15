@@ -55,22 +55,55 @@ export const authentication = async (req: Request, res: Response) => {
       return;
     }
 
-    let data = {
-      id: findUser?.id,
-      username: findUser?.username,
-      password: findUser?.password,
-      role: findUser?.role,
+    // Generate token
+    const data = {
+      id: findUser.id,
+      username: findUser.username,
+      role: findUser.role,
     };
 
-    let payload = JSON.stringify(data);
-    let secretKey = SECRET || "";
+    const payload = JSON.stringify(data);
+    const secretKey = SECRET || "";
+    const token = sign(payload, secretKey);
 
-    let token = sign(payload, secretKey);
+    // ============================================
+    // CEK PROFIL BERDASARKAN ROLE
+    // ============================================
+
+    let needProfile = false;
+
+    if (findUser.role === "SISWA") {
+      const siswa = await prisma.siswa.findFirst({
+        where: { id_user: findUser.id },
+      });
+
+      if (!siswa) {
+        needProfile = true;
+      }
+    }
+
+    if (findUser.role === "ADMIN_STAN") {
+      const stan = await prisma.stan.findFirst({
+        where: { id_user: findUser.id },
+      });
+
+      if (!stan) {
+        needProfile = true;
+      }
+    }
+
+    // ============================================
+    // RESPONSE LOGIN
+    // ============================================
 
     res.status(200).json({
       status: "success",
       logged: true,
-      message: `Login sukses.`,
+      needProfile,
+      role: findUser.role,
+      message: needProfile
+        ? "Anda belum mengisi data profil. Silakan lengkapi terlebih dahulu."
+        : "Login sukses.",
       token,
       data,
     });
