@@ -44,6 +44,9 @@ export const authentication = async (req: Request, res: Response) => {
 
     const findUser = await prisma.users.findFirst({
       where: { username, password: md5(password) },
+      include: {
+        stan: true,
+      },
     });
 
     if (!findUser) {
@@ -66,48 +69,64 @@ export const authentication = async (req: Request, res: Response) => {
     const secretKey = SECRET || "";
     const token = sign(payload, secretKey);
 
-    // ============================================
-    // CEK PROFIL BERDASARKAN ROLE
-    // ============================================
-
-    let needProfile = false;
-
+    // =============================
+    // KONDISI ROLE SISWA
+    // =============================
     if (findUser.role === "SISWA") {
       const siswa = await prisma.siswa.findFirst({
         where: { id_user: findUser.id },
       });
 
-      if (!siswa) {
-        needProfile = true;
-      }
+      const needProfile = !siswa;
+
+      res.status(200).json({
+        status: "success",
+        logged: true,
+        role: findUser.role,
+        needProfile,
+        message: needProfile
+          ? "Anda belum mengisi data profil. Silakan lengkapi."
+          : "Login sukses.",
+        token,
+        data: {
+          id: findUser.id,
+          username: findUser.username,
+          role: findUser.role,
+          nama: siswa?.nama || null,
+        },
+      });
+      return;
     }
 
+    // =============================
+    // KONDISI ROLE ADMIN STAN
+    // =============================
     if (findUser.role === "ADMIN_STAN") {
       const stan = await prisma.stan.findFirst({
         where: { id_user: findUser.id },
       });
 
-      if (!stan) {
-        needProfile = true;
-      }
+      const needProfile = !stan;
+
+      res.status(200).json({
+        status: "success",
+        logged: true,
+        role: findUser.role,
+        needProfile,
+        message: needProfile
+          ? "Anda belum mengisi data profil stan. Silakan lengkapi."
+          : "Login sukses.",
+        token,
+        data: {
+          id: findUser.id,
+          username: findUser.username,
+          role: findUser.role,
+          nama_stan: stan?.nama_stan || null,
+          nama_pemilik: stan?.nama_pemilik || null,
+        },
+      });
+      return;
     }
-
-    // ============================================
-    // RESPONSE LOGIN
-    // ============================================
-
-    res.status(200).json({
-      status: "success",
-      logged: true,
-      needProfile,
-      role: findUser.role,
-      message: needProfile
-        ? "Anda belum mengisi data profil. Silakan lengkapi terlebih dahulu."
-        : "Login sukses.",
-      token,
-      data,
-    });
-    return;
   } catch (error) {
     console.log(error);
     res.status(400).json({
